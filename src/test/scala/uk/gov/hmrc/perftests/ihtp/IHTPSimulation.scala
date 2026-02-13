@@ -26,7 +26,7 @@ class IHTPSimulation extends PerformanceTestRunner {
     "PSA View Submissions"
   ) withRequests (
     loginToIHTP,
-    getYourSubmissionsPage,
+    getYourSubmissionsPage
   )
 
   runSimulation()
