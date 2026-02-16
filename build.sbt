@@ -6,14 +6,9 @@ lazy val root = (project in file("."))
     scalaVersion := "3.3.7",
     scalacOptions ++= Seq("-feature", "-language:implicitConversions", "-language:postfixOps"),
     Test / testOptions := Seq.empty,
-    Test / parallelExecution := false,
     libraryDependencies ++= Dependencies.test,
-
-    // Fork for Gatling
-    fork in Gatling := true,
-
-    // JVM options for the forked Gatling process
-    javaOptions in Gatling ++= Seq(
-      "--add-opens=java.base/java.lang=ALL-UNNAMED"
+    Gatling / javaOptions ++= Seq(
+      "--add-opens=java.base/java.lang=ALL-UNNAMED",
+      "--add-opens=java.base/java.io=ALL-UNNAMED"
     )
   )
