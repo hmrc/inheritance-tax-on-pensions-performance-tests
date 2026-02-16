@@ -43,5 +43,5 @@ object IHTPPageRequests {
       .formParam("enrolment[0].taxIdentifier[0].value", _ => "A2100005")
       .formParam("enrolment[0].state", _ => "Activated")
       .check(status.is(303))
-     // .check(header("Location").is(s"$ihtpFrontendHost$ihtpRoute"))
+    // .check(header("Location").is(s"$ihtpFrontendHost$ihtpRoute"))
 }
