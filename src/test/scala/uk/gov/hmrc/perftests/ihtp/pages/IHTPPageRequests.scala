@@ -28,23 +28,20 @@ object IHTPPageRequests {
       .get(s"$ihtpFrontendHost$submissionListPath")
       .check(status.is(200))
       .check(substring("Your submissions"))
-      .check(css("input[name='csrfToken']", "value").saveAs("csrfToken"))
-
-//  val getDeclarationPage: HttpRequestBuilder =
-//    http("Get Declaration Page")
-//      .get(s"$ihtpFrontendHost$declarationPath")
-//      .check(status.is(200))
-//      .check(substring("Declaration"))
 
   val loginToIHTP: HttpRequestBuilder =
     http("Login to IHTP via Auth Stub")
       .post(ggSignInUrl)
       .formParam("redirectionUrl", s"$ihtpFrontendHost$ihtpRoute")
       .formParam("affinityGroup", "Organisation")
+      .formParam("credentialStrength", "strong") // Often required for Organisation
       .formParam("confidenceLevel", "50")
+      .formParam("nino", "")
+      .formParam("authorityId", "")
       .formParam("enrolment[0].name", "HMRC-PODS-ORG")
       .formParam("enrolment[0].taxIdentifier[0].name", "PsaID")
       .formParam("enrolment[0].taxIdentifier[0].value", "A2100005")
+      .formParam("enrolment[0].state", "Activated")
       .check(status.is(303))
       .check(header("Location").is(s"$ihtpFrontendHost$ihtpRoute"))
 }
