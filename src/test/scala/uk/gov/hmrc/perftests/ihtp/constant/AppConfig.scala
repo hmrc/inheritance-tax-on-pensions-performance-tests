@@ -21,8 +21,8 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 object AppConfig extends ServicesConfiguration {
   val ihtpFrontendHost: String   = baseUrlFor("inheritance-tax-on-pensions")
   val authHost: String           = baseUrlFor("auth-login-stub")
-  val ggSignInUrl                = s"$authHost/government-gateway/session/login"
-  val ihtpRoute: String          = "/inheritance-tax-on-pensions"
+  val ggSignInUrl                 = s"$authHost/auth-login-stub/gg-sign-in"
+  val ihtpRoute: String           = "/inheritance-tax-on-pensions/S2400000001"
   val submissionListPath: String = s"$ihtpRoute/submission-list"
-  // val declarationPath: String     = s"$ihtpRoute/declaration"
+  println("Auth URL = " + ggSignInUrl)
 }

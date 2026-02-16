@@ -27,7 +27,6 @@ class IHTPSimulation extends PerformanceTestRunner {
   ) withRequests (
     loginToIHTP,
     getYourSubmissionsPage,
-    //getDeclarationPage
   )
 
   runSimulation()
