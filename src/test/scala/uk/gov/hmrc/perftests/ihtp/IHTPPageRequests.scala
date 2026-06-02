@@ -21,7 +21,6 @@ import io.gatling.core.session.Expression
 import io.gatling.http.Predef.*
 import io.gatling.http.request.builder.HttpRequestBuilder
 
-import scala.concurrent.Future.never.value
 
 
 object IHTPPageRequests extends BaseRequest {
@@ -51,11 +50,11 @@ object IHTPPageRequests extends BaseRequest {
         .formParam("nino", _ => "")
         .formParam("authorityId", _ => "")
         .formParam("enrolment[0].name", _ => "HMRC-PODS-ORG")
-        .formParam("enrolment[0].taxIdentifier[0].name", _ => "PspID")
-        .formParam("enrolment[0].taxIdentifier[0].value", _ => "21000005")
+        .formParam("enrolment[0].taxIdentifier[0].name", _ => "PsaID")
+        .formParam("enrolment[0].taxIdentifier[0].value", _ => "A2100005")
         .formParam("enrolment[0].state", _ => "Activated")
         .check(status.is(303))
-  
+
 
   def getYouWillNeedPage: HttpRequestBuilder =
     http("Get What you will need Page")
@@ -204,42 +203,7 @@ object IHTPPageRequests extends BaseRequest {
     http("Navigate to Report submitted Page")
       .get(s"$baseUrl$route/ihtp-report-submitted": String)
       .check(status.is(200))
-
-
-//
-//
-//  def getLprIndividualNamePage: HttpRequestBuilder =
-//      http("Navigate to Enter the full name of the person managing the estate Page")
-//        .get(s"$baseUrl$route/enter-name-lpr": String)
-//        .check(status.is(200))
-//    //.check(saveCsrfToken())
-//
-//  def postLprIndividualNamePage: HttpRequestBuilder =
-//    http("Post Enter the full name of the person managing the estate Page")
-//      .post(s"$baseUrl$route/enter-name-lpr": String)
-//      .formParam("csrfToken", csrfTokenExpr)
-//      .check(status.is(303))
-
-
-//    def getLprCountryPage: HttpRequestBuilder =
-//      http("Navigate to Select the country or territory where lpr resides Page")
-//        .get(s"$baseUrl$route/country-picker": String)
-//        .check(status.is(200))
-//  //.check(saveCsrfToken())
-//
-//  def postLprCountryPage: HttpRequestBuilder =
-//    http("Post Select the country or territory where lpr resides Page")
-//      .post(s"$baseUrl$route/country-picker": String)
-//      .formParam("csrfToken", csrfTokenExpr)
-//      .check(status.is(303))
-
-
-//    val getYourSubmissionsPage: HttpRequestBuilder =
-//      http("Get Your Submissions Page")
-//        .get(s"$baseUrl$submissionListPath")
-//        .check(status.is(200))
-//        .check(substring("Your submissions"))
-
+  
 
 
 }

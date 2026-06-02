@@ -74,40 +74,12 @@ class IHTPSimulation extends PerformanceTestRunner {
     postLprOrganisationNamePageForPsp("LPR Organisation"),
     getOrganisationCYAPageForPsp,
     postOrganisationCYAPageForPsp,
-    getPsaDeclarationPageForPsp,
-    postPsaDeclarationPageForPsp,
-    getPsaIHTPReportSubmittedPageForPsp,
+    getDeclarationPageForPsp,
+    postDeclarationPageForPsp,
+    getIHTPReportSubmittedPageForPsp,
 
   )
-//  setup(
-//    "psa-view-submissions with Individual",
-//    "PSA View Submissions with Individual"
-//  )
-//  withRequests(
-//    getLoginToIHTPPage,
-//    postLoginToIHTPPage,
-//    getYouWillNeedPage,
-//    postYouWillNeedPage,
-//    getEnterInheritanceTaxReferencePage,
-//    postEnterInheritanceTaxReferencePage("A123456/25A"),
-//    getNameOfDeceasedPage,
-//    postNameOfDeceasedPage("John", "Smith"),
-//    getEnterNationalInsuranceNumberPage,
-//    postEnterNationalInsuranceNumberPage("AB123456C"),
-//    getEnterBirthDeathDatePage,
-//    postEnterBirthDeathDatePage,
-//    getLprIndividualNamePage,
-//        postLprIndividualNamePage,
-//        getLprCountryPage,
-//        postLprCountryPage,
-//    getOrganisationCYAPage,
-//    postOrganisationCYAPage,
-//    getPsaDeclarationPage,
-//    postPsaDeclarationPage,
-//    getPsaIHTPReportSubmittedPage,
-//    //
-//    // getYourSubmissionsPage,
-//  )
+
 
     runSimulation()
 }
