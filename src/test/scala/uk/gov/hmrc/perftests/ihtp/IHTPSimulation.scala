@@ -17,17 +17,97 @@
 package uk.gov.hmrc.perftests.ihtp
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.ihtp.pages.IHTPPageRequests._
+import io.gatling.core.structure.ChainBuilder
+import uk.gov.hmrc.perftests.ihtp.IHTPPageRequests.*
+import uk.gov.hmrc.perftests.ihtp.IHTPPSPPageRequests.*
+
 
 class IHTPSimulation extends PerformanceTestRunner {
 
   setup(
-    "psa-view-submissions",
-    "PSA View Submissions"
-  ) withRequests (
-    loginToIHTP,
-    getYourSubmissionsPage
+    "psa-view-submissions with Organisation",
+    "PSA View Submissions with Organisation"
+  ) withRequests(
+    getLoginToIHTPPage,
+    postLoginToIHTPPage,
+    getYouWillNeedPage,
+    postYouWillNeedPage,
+    getEnterInheritanceTaxReferencePage,
+    postEnterInheritanceTaxReferencePage("A123456/25A"),
+    getNameOfDeceasedPage,
+    postNameOfDeceasedPage("John","Smith"),
+    getEnterNationalInsuranceNumberPage,
+    postEnterNationalInsuranceNumberPage("AB123456C"),
+    getEnterBirthDeathDatePage,
+    postEnterBirthDeathDatePage,
+    getLprIndividualOrOrganisationPage,
+    postLprIndividualOrOrganisationPage,
+    getLprOrganisationNamePage,
+    postLprOrganisationNamePage("LPR Organisation"),
+    getOrganisationCYAPage,
+    postOrganisationCYAPage,
+    getPsaDeclarationPage,
+    postPsaDeclarationPage,
+    getPsaIHTPReportSubmittedPage,
+
   )
 
-  runSimulation()
+  setup(
+    "psp-view-submissions with Organisation",
+    "PSP View Submissions with Organisation"
+  ) withRequests(
+    getLoginToIHTPPageForPsp,
+    postLoginToIHTPPageForPsp,
+    getYouWillNeedPageForPsp,
+    postYouWillNeedPageForPsp,
+    getEnterInheritanceTaxReferencePageForPsp,
+    postEnterInheritanceTaxReferencePageForPsp("A123456/25A"),
+    getNameOfDeceasedPageForPsp,
+    postNameOfDeceasedPageForPsp("John", "Smith"),
+    getEnterNationalInsuranceNumberPageForPsp,
+    postEnterNationalInsuranceNumberPageForPsp("AB123456C"),
+    getEnterBirthDeathDatePageForPsp,
+    postEnterBirthDeathDatePageForPsp,
+    getLprIndividualOrOrganisationPageForPsp,
+    postLprIndividualOrOrganisationPageForPsp,
+    getLprOrganisationNamePageForPsp,
+    postLprOrganisationNamePageForPsp("LPR Organisation"),
+    getOrganisationCYAPageForPsp,
+    postOrganisationCYAPageForPsp,
+    getPsaDeclarationPageForPsp,
+    postPsaDeclarationPageForPsp,
+    getPsaIHTPReportSubmittedPageForPsp,
+
+  )
+//  setup(
+//    "psa-view-submissions with Individual",
+//    "PSA View Submissions with Individual"
+//  )
+//  withRequests(
+//    getLoginToIHTPPage,
+//    postLoginToIHTPPage,
+//    getYouWillNeedPage,
+//    postYouWillNeedPage,
+//    getEnterInheritanceTaxReferencePage,
+//    postEnterInheritanceTaxReferencePage("A123456/25A"),
+//    getNameOfDeceasedPage,
+//    postNameOfDeceasedPage("John", "Smith"),
+//    getEnterNationalInsuranceNumberPage,
+//    postEnterNationalInsuranceNumberPage("AB123456C"),
+//    getEnterBirthDeathDatePage,
+//    postEnterBirthDeathDatePage,
+//    getLprIndividualNamePage,
+//        postLprIndividualNamePage,
+//        getLprCountryPage,
+//        postLprCountryPage,
+//    getOrganisationCYAPage,
+//    postOrganisationCYAPage,
+//    getPsaDeclarationPage,
+//    postPsaDeclarationPage,
+//    getPsaIHTPReportSubmittedPage,
+//    //
+//    // getYourSubmissionsPage,
+//  )
+
+    runSimulation()
 }
