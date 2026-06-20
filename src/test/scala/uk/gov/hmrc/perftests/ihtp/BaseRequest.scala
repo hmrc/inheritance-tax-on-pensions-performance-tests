@@ -32,9 +32,10 @@ trait BaseRequest extends ServicesConfiguration {
   val route: String = "/inheritance-tax-on-pensions/S2400000001"
   val submissionListPath: String = s"$route/submission-list"
   val WhatWillYouNeed: String = s"$route/start-report-you-will-need"
+  val ReportInheritanceTaxOnPension: String = s"$route/report-inheritance-tax-on-pension"
 
   protected val CsrfPattern =
-    """<input type="hidden" name="csrfToken" value="([^"]+)""""
+    """name="csrfToken"\s+value="([^"]+)""""
 
   protected def saveCsrfToken(): CheckBuilder[RegexCheckType, String] =
     regex(CsrfPattern).saveAs("csrfToken")
