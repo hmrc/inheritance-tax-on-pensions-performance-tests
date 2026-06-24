@@ -17,7 +17,7 @@
 package uk.gov.hmrc.perftests.ihtp
 
 import io.gatling.core.Predef.*
-import io.gatling.core.session.{Expression, ExpressionSuccessWrapper}
+import io.gatling.core.session.Expression
 import io.gatling.http.check.HttpCheck
 import io.gatling.http.Predef.*
 import io.gatling.http.request.builder.HttpRequestBuilder
@@ -182,82 +182,82 @@ object IHTPPageRequests extends BaseRequest {
       )
 
   def getLprIndividualNamePage: HttpRequestBuilder =
-      http("Navigate to Enter the name of the Individual Page")
-        .get(s"$baseUrl$route/enter-name-lpr": String)
+      http("Navigate to Enter the name of the Individual Page- Chane page")
+        .get(s"$baseUrl$route/change-name-lpr": String)
         .check(status.is(200))
         .check(saveCsrfToken())
 
 
     def postLprIndividualNamePage(firstForename: String, surname: String): HttpRequestBuilder =
-      http("Enter the full name of the person managing the estate Page")
-        .post(s"$baseUrl$route/enter-name-lpr": String)
+      http("Enter the full name of the person managing the estate Page-change")
+        .post(s"$baseUrl$route/change-name-lpr": String)
         .formParam("csrfToken", csrfTokenExpr)
         .formParam("firstForename", _ => firstForename)
         .formParam("surname",_ =>  surname)
         .check(status.is(303))
         .check(
-          header("Location".expressionSuccess).saveAs("redirectUrl")
-        )
+          header(locationHeaderExpr).is(s"$route/check-your-answers": String))
 
-    def getSelectCountryPage: HttpRequestBuilder =
-        http("Navigate to select Country Page")
-          .get("${redirectUrl}")
-          .check(status.is(200))
-          .check(saveCsrfToken())
-
-    def postSelectCountryPage(country: String, selectedOption: String): HttpRequestBuilder =
-        http("Enter Country for Individual Page")
-         .post("${redirectUrl}": String)
-         .formParam("csrfToken", csrfTokenExpr)
-         .formParam("country",_ => country)
-         .formParam("selectedOption", _ => "someValue")
-         .check(status.is(303))
-          .check(
-        header("Location".expressionSuccess).saveAs("nextRedirectUrl")
-      )
-
-    def getLookUpAddressPage: HttpRequestBuilder =
-        http("Navigate to Lookup Address Page")
-        .get("${nextRedirectUrl}")
-        .check(status.is(200))
-       .check(saveCsrfToken())
-
-    def postLookUpAddressPage(postcode: String): HttpRequestBuilder =
-      http("Enter post code of the individual Page")
-      .post("${nextRedirectUrl}")
-      .formParam("csrfToken", csrfTokenExpr)
-      .formParam("name", _ => postcode)
-      .check(status.is(303))
-      .check(currentLocation.saveAs("selectPostcodeUrl"))
-
-    def getSelectAddressPage: HttpRequestBuilder =
-      http("Navigate to Choose Individual Address Page")
-        .get("${selectPostcodeUrl}")
-        .check(status.is(200))
-        .check(saveCsrfToken())
-
-    def postSelectAddressPage(addressid: String): HttpRequestBuilder =
-        http("Post Deceased has a National Insurance number Page")
-          .post("/select?postcode=ZZ11ZZ")
-          .formParam("csrfToken", csrfTokenExpr)
-          .formParam("name", _ => addressid)
-          .check(status.is(303))
-          .check(currentLocation.saveAs("selectConfirmUrl"))
-
-    def getReviewAndConfirmPage: HttpRequestBuilder =
-        http("Navigate to Review and Confirm Address Page")
-           .get("${selectConfirmUrl}")
-           .check(status.is(200))
-           .check(saveCsrfToken())
-
-    def postReviewAndConfirmPage: HttpRequestBuilder =
-    http("Post Review and Confirm Address Page")
-      .post("/confirm")
-      .formParam("csrfToken", csrfTokenExpr)
-      .check(status.is(303))
-      .check(
-        header(locationHeaderExpr).is(s"$route/check-your-answers": String))
-        
+//
+//    def getSelectCountryPage: HttpRequestBuilder =
+//        http("Navigate to select Country Page")
+//          .get("${redirectUrl}")
+//          .check(status.is(200))
+//          .check(saveCsrfToken())
+//
+//    def postSelectCountryPage(country: String, selectedOption: String): HttpRequestBuilder =
+//        http("Enter Country for Individual Page")
+//         .post("${redirectUrl}": String)
+//         .formParam("csrfToken", csrfTokenExpr)
+//         .formParam("country",_ => country)
+//         .formParam("selectedOption", _ => "someValue")
+//         .check(status.is(303))
+//          .check(
+//        header("Location".expressionSuccess).saveAs("nextRedirectUrl")
+//      )
+//
+//    def getLookUpAddressPage: HttpRequestBuilder =
+//        http("Navigate to Lookup Address Page")
+//        .get("${nextRedirectUrl}")
+//        .check(status.is(200))
+//       .check(saveCsrfToken())
+//
+//    def postLookUpAddressPage(postcode: String): HttpRequestBuilder =
+//      http("Enter post code of the individual Page")
+//      .post("${nextRedirectUrl}")
+//      .formParam("csrfToken", csrfTokenExpr)
+//      .formParam("name", _ => postcode)
+//      .check(status.is(303))
+//      .check(currentLocation.saveAs("selectPostcodeUrl"))
+//
+//    def getSelectAddressPage: HttpRequestBuilder =
+//      http("Navigate to Choose Individual Address Page")
+//        .get("${selectPostcodeUrl}")
+//        .check(status.is(200))
+//        .check(saveCsrfToken())
+//
+//    def postSelectAddressPage(addressid: String): HttpRequestBuilder =
+//        http("Post Deceased has a National Insurance number Page")
+//          .post("/select?postcode=ZZ11ZZ")
+//          .formParam("csrfToken", csrfTokenExpr)
+//          .formParam("name", _ => addressid)
+//          .check(status.is(303))
+//          .check(currentLocation.saveAs("selectConfirmUrl"))
+//
+//    def getReviewAndConfirmPage: HttpRequestBuilder =
+//        http("Navigate to Review and Confirm Address Page")
+//           .get("${selectConfirmUrl}")
+//           .check(status.is(200))
+//           .check(saveCsrfToken())
+//
+//    def postReviewAndConfirmPage: HttpRequestBuilder =
+//    http("Post Review and Confirm Address Page")
+//      .post("/confirm")
+//      .formParam("csrfToken", csrfTokenExpr)
+//      .check(status.is(303))
+//      .check(
+//        header(locationHeaderExpr).is(s"$route/check-your-answers": String))
+//
 
   def getLprOrganisationNamePage: HttpRequestBuilder =
     http("Navigate to Enter the name of the organisation Page")
@@ -309,7 +309,7 @@ object IHTPPageRequests extends BaseRequest {
     http("Navigate to Report submitted Page")
       .get(s"$baseUrl$route/ihtp-report-submitted": String)
       .check(status.is(200))
-  
+
 
 
 }

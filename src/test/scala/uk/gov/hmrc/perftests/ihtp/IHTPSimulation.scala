@@ -17,7 +17,6 @@
 package uk.gov.hmrc.perftests.ihtp
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import io.gatling.core.structure.ChainBuilder
 import uk.gov.hmrc.perftests.ihtp.IHTPPageRequests.*
 import uk.gov.hmrc.perftests.ihtp.IHTPPSPPageRequests.*
 
@@ -80,7 +79,6 @@ class IHTPSimulation extends PerformanceTestRunner {
     getIHTPReportSubmittedPageForPsp,
 
   )
-
   setup(
     "psa-view-submissions with Individual",
     "PSA View Submissions with Individual"
@@ -102,20 +100,18 @@ class IHTPSimulation extends PerformanceTestRunner {
     postLprIndividualOrOrganisationPage("individual"),
     getLprIndividualNamePage,
     postLprIndividualNamePage("Joe", "Smith"),
-    getSelectCountryPage,
-    postSelectCountryPage("United Kingdom", "United Kingdom"),
-    getLookUpAddressPage,
-    postLookUpAddressPage("ZZ11ZZ"),
-    getSelectAddressPage,
-    postSelectAddressPage("2 Other Place, Some District, Anytown, ZZ1 1ZZ"),
-    getReviewAndConfirmPage,
-    postReviewAndConfirmPage,
+//    getSelectCountryPage,
+//    postSelectCountryPage("United Kingdom", "United Kingdom"),
+//    getLookUpAddressPage,
+//    postLookUpAddressPage("ZZ11ZZ"),
+//    getSelectAddressPage,
+//    postSelectAddressPage("2 Other Place, Some District, Anytown, ZZ1 1ZZ"),
+//    getReviewAndConfirmPage,
+//    postReviewAndConfirmPage,
     getCYAPage,
     postCYAPage,
-    getPsaDeclarationPage,
-    postPsaDeclarationPage,
-    getPsaIHTPReportSubmittedPage,
-
+//    getPsaDeclarationPage,
+//    postPsaDeclarationPage,
   )
 
 
