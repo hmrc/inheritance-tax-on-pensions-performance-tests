@@ -40,22 +40,6 @@ object IHTPPageRequests extends BaseRequest {
       .check(status.is(200))
       .check(saveCsrfToken())
 
-//  def postLoginToIHTPPage: HttpRequestBuilder =
-//     http("Login to Psp IHTP via Auth Stub")
-//        .post(s"$authUrl/auth-login-stub/gg-sign-in")
-//        .formParam("csrfToken", csrfTokenExpr)
-//        .formParam("redirectionUrl", _ => s"$baseUrl$WhatWillYouNeed")
-//        .formParam("affinityGroup", _ => "Organisation")
-//        .formParam("credentialStrength", _ => "strong")
-//        .formParam("confidenceLevel", _ => "50")
-//        .formParam("nino", _ => "")
-//        .formParam("authorityId", _ => "")
-//        .formParam("enrolment[0].name", _ => "HMRC-PODS-ORG")
-//        .formParam("enrolment[0].taxIdentifier[0].name", _ => "PsaID")
-//        .formParam("enrolment[0].taxIdentifier[0].value", _ => "A2100005")
-//        .formParam("enrolment[0].state", _ => "Activated")
-//        .check(status.is(303))
-
   def postLoginToIHTPPage: HttpRequestBuilder =
     http("Login to Psa IHTP via Auth Stub")
       .post(s"$authUrl/auth-login-stub/gg-sign-in")
@@ -72,12 +56,10 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("enrolment[0].state", _ => "Activated")
       .check(status.is(303))
 
-
   def getReportInheritanceTaxOnPensionPage: HttpRequestBuilder =
     http("Get Report Inheritance Tax on a pension Page")
       .get(s"$baseUrl$route/report-inheritance-tax-on-pension")
       .check(status.is(200))
-
 
   def getYouWillNeedPage: HttpRequestBuilder =
     http("Get What you will need Page")
@@ -86,11 +68,10 @@ object IHTPPageRequests extends BaseRequest {
       .check(bodyString.saveAs("pageBody"))
       .check(saveCsrfToken())
 
-
   def postYouWillNeedPage: HttpRequestBuilder =
-    http("Post What you will need Page")
+   http("Post What you will need Page")
      .post(s"$baseUrl$route/start-report-you-will-need": String)
-    .formParam("csrfToken", csrfTokenExpr)
+     .formParam("csrfToken", csrfTokenExpr)
      .check(status.is(303))
      .check(header(locationHeaderExpr).is(s"$route/enter-inheritance-tax-reference": String))
 
@@ -98,7 +79,7 @@ object IHTPPageRequests extends BaseRequest {
     http("Navigate to Enter the Inheritance Tax reference number Page")
       .get(s"$baseUrl$route/enter-inheritance-tax-reference": String)
       .check(status.is(200))
-    .check(saveCsrfToken())
+      .check(saveCsrfToken())
 
   def postEnterInheritanceTaxReferencePage(taxReference: String): HttpRequestBuilder =
     http("Post Enter the Inheritance Tax reference number Page")
@@ -120,8 +101,8 @@ object IHTPPageRequests extends BaseRequest {
         .formParam("csrfToken", csrfTokenExpr)
         .formParam("firstForename", _ => firstForename)
         .formParam("surname",_ =>  surname)
-       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/enter-national-insurance-number": String))
+        .check(status.is(303))
+        .check(header(locationHeaderExpr).is(s"$route/enter-national-insurance-number": String))
 
   def getEnterNationalInsuranceNumberPage: HttpRequestBuilder =
     http("Navigate to Deceased has a National Insurance number Page")
@@ -140,23 +121,23 @@ object IHTPPageRequests extends BaseRequest {
 
 
   def getEnterBirthDeathDatePage: HttpRequestBuilder =
-      http("Navigate to Enter DOB and DOD of Deceased Page")
-        .get(s"$baseUrl$route/enter-birth-death-date": String)
-        .check(status.is(200))
-    //.check(saveCsrfToken())
+    http("Navigate to Enter DOB and DOD of Deceased Page")
+      .get(s"$baseUrl$route/enter-birth-death-date": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
 
   def postEnterBirthDeathDatePage: HttpRequestBuilder =
-      http("Post Enter DOB and DOD of Deceased Page")
-        .post(s"$baseUrl$route/enter-birth-death-date": String)
-        .formParam("csrfToken", csrfTokenExpr)
-        .formParam("dateOfBirth.day", "09": Expression[String])
-        .formParam("dateOfBirth.month", "11": Expression[String])
-        .formParam("dateOfBirth.year", "1990": Expression[String])
-        .formParam("dateOfDeath.day", "09": Expression[String])
-        .formParam("dateOfDeath.month", "11": Expression[String])
-        .formParam("dateOfDeath.year", "2023": Expression[String])
-        .check(status.is(303))
-        .check(
+    http("Post Enter DOB and DOD of Deceased Page")
+      .post(s"$baseUrl$route/enter-birth-death-date": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("dateOfBirth.day", "09": Expression[String])
+      .formParam("dateOfBirth.month", "11": Expression[String])
+      .formParam("dateOfBirth.year", "1990": Expression[String])
+      .formParam("dateOfDeath.day", "09": Expression[String])
+      .formParam("dateOfDeath.month", "11": Expression[String])
+      .formParam("dateOfDeath.year", "2023": Expression[String])
+      .check(status.is(303))
+      .check(
           header(locationHeaderExpr).is(s"$route/lpr-individual-or-organisation": String)
         )
 
@@ -168,96 +149,34 @@ object IHTPPageRequests extends BaseRequest {
 
   def postLprIndividualOrOrganisationPage(lprType: String): HttpRequestBuilder =
     http("Post Is the legal personal representative (LPR) an individual or a member of an organisation Page")
-      .post(s"$baseUrl$route/lpr-individual-or-organisation": String)
-      .formParam("csrfToken", csrfTokenExpr)
-      .formParam("value", lprType: Expression[String])
-      .check(status.is(303))
-      .check(
-        header(locationHeaderExpr).is(
-          lprType match {
-          case "individual"=> s"$route/enter-name-lpr"
+       .post(s"$baseUrl$route/lpr-individual-or-organisation": String)
+       .formParam("csrfToken", csrfTokenExpr)
+       .formParam("value", lprType: Expression[String])
+       .check(status.is(303))
+       .check(
+         header(locationHeaderExpr).is(
+           lprType match {
+            case "individual"=> s"$route/enter-name-lpr"
             case "organisation" => s"$route/enter-organisation-name"
           }
         )
       )
 
-  def getLprIndividualNamePage: HttpRequestBuilder =
-      http("Navigate to Enter the name of the Individual Page- Chane page")
+  def getLprIndividualNameChangePage: HttpRequestBuilder =
+    http("Navigate to Enter the name of the Individual Page- Change page")
         .get(s"$baseUrl$route/change-name-lpr": String)
         .check(status.is(200))
         .check(saveCsrfToken())
 
-
-    def postLprIndividualNamePage(firstForename: String, surname: String): HttpRequestBuilder =
-      http("Enter the full name of the person managing the estate Page-change")
-        .post(s"$baseUrl$route/change-name-lpr": String)
-        .formParam("csrfToken", csrfTokenExpr)
-        .formParam("firstForename", _ => firstForename)
-        .formParam("surname",_ =>  surname)
-        .check(status.is(303))
-        .check(
-          header(locationHeaderExpr).is(s"$route/check-your-answers": String))
-
-//
-//    def getSelectCountryPage: HttpRequestBuilder =
-//        http("Navigate to select Country Page")
-//          .get("${redirectUrl}")
-//          .check(status.is(200))
-//          .check(saveCsrfToken())
-//
-//    def postSelectCountryPage(country: String, selectedOption: String): HttpRequestBuilder =
-//        http("Enter Country for Individual Page")
-//         .post("${redirectUrl}": String)
-//         .formParam("csrfToken", csrfTokenExpr)
-//         .formParam("country",_ => country)
-//         .formParam("selectedOption", _ => "someValue")
-//         .check(status.is(303))
-//          .check(
-//        header("Location".expressionSuccess).saveAs("nextRedirectUrl")
-//      )
-//
-//    def getLookUpAddressPage: HttpRequestBuilder =
-//        http("Navigate to Lookup Address Page")
-//        .get("${nextRedirectUrl}")
-//        .check(status.is(200))
-//       .check(saveCsrfToken())
-//
-//    def postLookUpAddressPage(postcode: String): HttpRequestBuilder =
-//      http("Enter post code of the individual Page")
-//      .post("${nextRedirectUrl}")
-//      .formParam("csrfToken", csrfTokenExpr)
-//      .formParam("name", _ => postcode)
-//      .check(status.is(303))
-//      .check(currentLocation.saveAs("selectPostcodeUrl"))
-//
-//    def getSelectAddressPage: HttpRequestBuilder =
-//      http("Navigate to Choose Individual Address Page")
-//        .get("${selectPostcodeUrl}")
-//        .check(status.is(200))
-//        .check(saveCsrfToken())
-//
-//    def postSelectAddressPage(addressid: String): HttpRequestBuilder =
-//        http("Post Deceased has a National Insurance number Page")
-//          .post("/select?postcode=ZZ11ZZ")
-//          .formParam("csrfToken", csrfTokenExpr)
-//          .formParam("name", _ => addressid)
-//          .check(status.is(303))
-//          .check(currentLocation.saveAs("selectConfirmUrl"))
-//
-//    def getReviewAndConfirmPage: HttpRequestBuilder =
-//        http("Navigate to Review and Confirm Address Page")
-//           .get("${selectConfirmUrl}")
-//           .check(status.is(200))
-//           .check(saveCsrfToken())
-//
-//    def postReviewAndConfirmPage: HttpRequestBuilder =
-//    http("Post Review and Confirm Address Page")
-//      .post("/confirm")
-//      .formParam("csrfToken", csrfTokenExpr)
-//      .check(status.is(303))
-//      .check(
-//        header(locationHeaderExpr).is(s"$route/check-your-answers": String))
-//
+  def postLprIndividualNameChangePage(firstForename: String, surname: String): HttpRequestBuilder =
+    http("Enter the full name of the person managing the estate Page-change")
+      .post(s"$baseUrl$route/change-name-lpr": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("firstForename", _ => firstForename)
+      .formParam("surname",_ =>  surname)
+      .check(status.is(303))
+      .check(
+         header(locationHeaderExpr).is(s"$route/check-your-answers": String))
 
   def getLprOrganisationNamePage: HttpRequestBuilder =
     http("Navigate to Enter the name of the organisation Page")
@@ -279,7 +198,7 @@ object IHTPPageRequests extends BaseRequest {
     http("Navigate to Check and submit the report Page")
       .get(s"$baseUrl$route/check-your-answers": String)
       .check(status.is(200))
-       .check(saveCsrfToken())
+      .check(saveCsrfToken())
 
   def postCYAPage: HttpRequestBuilder =
     http("Post Check and submit the reportPage")
@@ -309,7 +228,6 @@ object IHTPPageRequests extends BaseRequest {
     http("Navigate to Report submitted Page")
       .get(s"$baseUrl$route/ihtp-report-submitted": String)
       .check(status.is(200))
-
 
 
 }
