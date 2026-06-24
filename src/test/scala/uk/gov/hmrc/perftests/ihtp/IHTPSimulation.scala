@@ -98,8 +98,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     postEnterBirthDeathDatePage,
     getLprIndividualOrOrganisationPage,
     postLprIndividualOrOrganisationPage("individual"),
-    getLprIndividualNameChangePage,
-    postLprIndividualNameChangePage("Joe", "Smith"),
+    getLprIndividualNameChangePage,  //Usingchangenameurltoavoidaddresslookup
+    postLprIndividualNameChangePage("Joe", "Smith"), //Usingchangenameurltoavoidaddresslookup
     getCYAPage,
     postCYAPage,
 //    getPsaDeclarationPage,
