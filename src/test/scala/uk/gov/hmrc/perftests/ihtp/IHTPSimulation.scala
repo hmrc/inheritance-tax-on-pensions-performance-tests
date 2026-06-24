@@ -17,7 +17,6 @@
 package uk.gov.hmrc.perftests.ihtp
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import io.gatling.core.structure.ChainBuilder
 import uk.gov.hmrc.perftests.ihtp.IHTPPageRequests.*
 import uk.gov.hmrc.perftests.ihtp.IHTPPSPPageRequests.*
 
@@ -30,6 +29,7 @@ class IHTPSimulation extends PerformanceTestRunner {
   ) withRequests(
     getLoginToIHTPPage,
     postLoginToIHTPPage,
+    getReportInheritanceTaxOnPensionPage,
     getYouWillNeedPage,
     postYouWillNeedPage,
     getEnterInheritanceTaxReferencePage,
@@ -41,11 +41,11 @@ class IHTPSimulation extends PerformanceTestRunner {
     getEnterBirthDeathDatePage,
     postEnterBirthDeathDatePage,
     getLprIndividualOrOrganisationPage,
-    postLprIndividualOrOrganisationPage,
+    postLprIndividualOrOrganisationPage("organisation"),
     getLprOrganisationNamePage,
     postLprOrganisationNamePage("LPR Organisation"),
-    getOrganisationCYAPage,
-    postOrganisationCYAPage,
+    postCYAPage,
+    postCYAPage,
     getPsaDeclarationPage,
     postPsaDeclarationPage,
     getPsaIHTPReportSubmittedPage,
@@ -72,12 +72,38 @@ class IHTPSimulation extends PerformanceTestRunner {
     postLprIndividualOrOrganisationPageForPsp,
     getLprOrganisationNamePageForPsp,
     postLprOrganisationNamePageForPsp("LPR Organisation"),
-    getOrganisationCYAPageForPsp,
-    postOrganisationCYAPageForPsp,
+    postCYAPageForPsp,
+    postCYAPageForPsp,
     getDeclarationPageForPsp,
     postDeclarationPageForPsp,
     getIHTPReportSubmittedPageForPsp,
 
+  )
+  setup(
+    "psa-view-submissions with Individual",
+    "PSA View Submissions with Individual"
+  ) withRequests(
+    getLoginToIHTPPage,
+    postLoginToIHTPPage,
+    getReportInheritanceTaxOnPensionPage,
+    getYouWillNeedPage,
+    postYouWillNeedPage,
+    getEnterInheritanceTaxReferencePage,
+    postEnterInheritanceTaxReferencePage("A123456/25A"),
+    getNameOfDeceasedPage,
+    postNameOfDeceasedPage("John", "Smith"),
+    getEnterNationalInsuranceNumberPage,
+    postEnterNationalInsuranceNumberPage("AB123456C"),
+    getEnterBirthDeathDatePage,
+    postEnterBirthDeathDatePage,
+    getLprIndividualOrOrganisationPage,
+    postLprIndividualOrOrganisationPage("individual"),
+    getLprIndividualNameChangePage,  //Usingchangenameurltoavoidaddresslookup
+    postLprIndividualNameChangePage("Joe", "Smith"), //Usingchangenameurltoavoidaddresslookup
+    getCYAPage,
+    postCYAPage,
+//    getPsaDeclarationPage,
+//    postPsaDeclarationPage,
   )
 
 

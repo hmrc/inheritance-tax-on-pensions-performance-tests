@@ -169,13 +169,13 @@ object IHTPPSPPageRequests extends BaseRequest {
         header(locationHeaderExpr).is(s"$route/check-your-answers": String)
       )
 
-  def getOrganisationCYAPageForPsp: HttpRequestBuilder =
+  def getCYAPageForPsp: HttpRequestBuilder =
     http("Navigate to Check and submit the report Page")
       .get(s"$baseUrl$route/check-your-answers": String)
       .check(status.is(200))
        .check(saveCsrfToken())
 
-  def postOrganisationCYAPageForPsp: HttpRequestBuilder =
+  def postCYAPageForPsp: HttpRequestBuilder =
     http("Post Check and submit the reportPage")
       .post(s"$baseUrl$route/check-your-answers": String)
       .formParam("csrfToken", csrfTokenExpr)
