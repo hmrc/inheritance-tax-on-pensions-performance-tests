@@ -162,13 +162,13 @@ object IHTPPageRequests extends BaseRequest {
         )
       )
 
-  def getLprIndividualNameChangePage: HttpRequestBuilder =
+  def getLprIndividualNameChangePage: HttpRequestBuilder =    //Usingchangenameurltemporarlytoavoidaddresslookup
     http("Navigate to Enter the name of the Individual Page- Change page")
         .get(s"$baseUrl$route/change-name-lpr": String)
         .check(status.is(200))
         .check(saveCsrfToken())
 
-  def postLprIndividualNameChangePage(firstForename: String, surname: String): HttpRequestBuilder =
+  def postLprIndividualNameChangePage(firstForename: String, surname: String): HttpRequestBuilder =  ////Usingchangenameurltemporarlytoavoidaddresslookup
     http("Enter the full name of the person managing the estate Page-change")
       .post(s"$baseUrl$route/change-name-lpr": String)
       .formParam("csrfToken", csrfTokenExpr)

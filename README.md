@@ -34,7 +34,8 @@ docker run --rm -d --name mongo -d -p 27017:27017 mongo:4.0
 
 ```
 
-This is a placeholder README.md for a new repository
+### . WARNING
+Do **NOT** run a full performance test against staging from your local machine
 
 ### License
 
