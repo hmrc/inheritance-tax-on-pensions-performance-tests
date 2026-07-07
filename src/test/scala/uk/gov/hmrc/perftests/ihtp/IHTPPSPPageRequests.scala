@@ -166,6 +166,60 @@ object IHTPPSPPageRequests extends BaseRequest {
       .formParam("value", organisationName: Expression[String])
       .check(status.is(303))
       .check(
+        header(locationHeaderExpr).is(s"$route/enter-name-pr-organisation": String)
+      )
+
+  def getEnterNamePrOrganisationPageForPsp: HttpRequestBuilder =
+    http("Navigate to Enter the full name of the PR at <Organisation name> Page")
+      .get(s"$baseUrl$route/enter-name-pr-organisation": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postEnterNamePrOrganisationPageForPsp(firstForename: String, surname: String): HttpRequestBuilder =
+    http("Post Enter the full name of the PR at <Organisation name> Page")
+      .post(s"$baseUrl$route/enter-name-pr-organisation": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("firstForename", _ => firstForename)
+      .formParam("surname", _ => surname)
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/pr-submit-payment-notice": String))
+
+  def getPrSubmitPaymentNoticePageForPsp: HttpRequestBuilder =
+    http("Navigate to Did PR submit the payment notice? Page")
+      .get(s"$baseUrl$route/pr-submit-payment-notice": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postPrSubmitPaymentNoticePageForPsp(submitOption: String): HttpRequestBuilder =
+    http("Post Did PR submit the payment notice? Page")
+      .post(s"$baseUrl$route/pr-submit-payment-notice": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", submitOption: Expression[String])
+      .check(status.is(303))
+      .check(
+        header(locationHeaderExpr).is(
+          submitOption match {
+            case "true" => s"$route/scheme-receive-payment-notice"
+            case "false" => s"$route/scheme-receive-payment-notice"
+          }
+        )
+      )
+
+  def getSchemeReceivePaymentNoticePageForPsp: HttpRequestBuilder =
+    http("Navigate to When did Open Single Trust Scheme with Indiv Establisher and Trustees receive the payment notice? Page")
+      .get(s"$baseUrl$route/scheme-receive-payment-notice": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postSchemeReceivePaymentNoticePageForPsp: HttpRequestBuilder =
+    http("Post When did Open Single Trust Scheme with Indiv Establisher and Trustees receive the payment notice? Page")
+      .post(s"$baseUrl$route/scheme-receive-payment-notice": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("dateThePensionSchemeReceivedNoticeToPay.day", "09": Expression[String])
+      .formParam("dateThePensionSchemeReceivedNoticeToPay.month", "11": Expression[String])
+      .formParam("dateThePensionSchemeReceivedNoticeToPay.year", "2024": Expression[String])
+      .check(status.is(303))
+      .check(
         header(locationHeaderExpr).is(s"$route/check-your-answers": String)
       )
 
