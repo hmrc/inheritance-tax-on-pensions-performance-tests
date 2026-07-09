@@ -17,8 +17,8 @@
 package uk.gov.hmrc.perftests.ihtp
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.ihtp.IHTPPageRequests.*
 import uk.gov.hmrc.perftests.ihtp.IHTPPSPPageRequests.*
+import uk.gov.hmrc.perftests.ihtp.IHTPPageRequests.*
 
 
 class IHTPSimulation extends PerformanceTestRunner {
@@ -44,6 +44,12 @@ class IHTPSimulation extends PerformanceTestRunner {
     postLprIndividualOrOrganisationPage("organisation"),
     getLprOrganisationNamePage,
     postLprOrganisationNamePage("LPR Organisation"),
+    getEnterNamePrOrganisationPage,
+    postEnterNamePrOrganisationPage("TestFirstName", "TestSurname"),
+    getPrSubmitPaymentNoticePage,
+    postPrSubmitPaymentNoticePage("true"),
+    getSchemeReceivePaymentNoticePage,
+    postSchemeReceivePaymentNoticePage,
     postCYAPage,
     postCYAPage,
     getPsaDeclarationPage,
@@ -72,6 +78,12 @@ class IHTPSimulation extends PerformanceTestRunner {
     postLprIndividualOrOrganisationPageForPsp,
     getLprOrganisationNamePageForPsp,
     postLprOrganisationNamePageForPsp("LPR Organisation"),
+    getEnterNamePrOrganisationPageForPsp,
+    postEnterNamePrOrganisationPageForPsp("TestFirstname", "TestSurname"),
+    getPrSubmitPaymentNoticePageForPsp,
+    postPrSubmitPaymentNoticePageForPsp("false"),
+    getSchemeReceivePaymentNoticePageForPsp,
+    postSchemeReceivePaymentNoticePageForPsp,
     postCYAPageForPsp,
     postCYAPageForPsp,
     getDeclarationPageForPsp,
