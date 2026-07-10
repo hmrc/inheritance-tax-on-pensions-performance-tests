@@ -240,7 +240,28 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("dateThePensionSchemeReceivedNoticeToPay.year", "2024": Expression[String])
       .check(status.is(303))
       .check(
-        header(locationHeaderExpr).is(s"$route/check-your-answers": String)
+        header(locationHeaderExpr).is(s"$route/are-beneficiaries-known": String)
+      )
+
+  def getAreBeneficiariesKnownPage: HttpRequestBuilder =
+    http("Navigate to Did PR submit the payment notice? Page")
+      .get(s"$baseUrl$route/are-beneficiaries-known": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postAreBeneficiariesKnownPage(submitOption: String): HttpRequestBuilder =
+    http("Post Did PR submit the payment notice? Page")
+      .post(s"$baseUrl$route/are-beneficiaries-known": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", submitOption: Expression[String])
+      .check(status.is(303))
+      .check(
+        header(locationHeaderExpr).is(
+          submitOption match {
+            case "true"  => s"$route/check-your-answers"
+            case "false" => s"$route/check-your-answers"
+          }
+        )
       )
 
   def getCYAPage: HttpRequestBuilder =

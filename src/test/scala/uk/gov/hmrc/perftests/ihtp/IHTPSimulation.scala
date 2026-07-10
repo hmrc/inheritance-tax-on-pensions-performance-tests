@@ -20,13 +20,12 @@ import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.ihtp.IHTPPSPPageRequests.*
 import uk.gov.hmrc.perftests.ihtp.IHTPPageRequests.*
 
-
 class IHTPSimulation extends PerformanceTestRunner {
 
   setup(
     "psa-view-submissions with Organisation",
     "PSA View Submissions with Organisation"
-  ) withRequests(
+  ) withRequests (
     getLoginToIHTPPage,
     postLoginToIHTPPage,
     getReportInheritanceTaxOnPensionPage,
@@ -35,7 +34,7 @@ class IHTPSimulation extends PerformanceTestRunner {
     getEnterInheritanceTaxReferencePage,
     postEnterInheritanceTaxReferencePage("A123456/25A"),
     getNameOfDeceasedPage,
-    postNameOfDeceasedPage("John","Smith"),
+    postNameOfDeceasedPage("John", "Smith"),
     getEnterNationalInsuranceNumberPage,
     postEnterNationalInsuranceNumberPage("AB123456C"),
     getEnterBirthDeathDatePage,
@@ -50,18 +49,19 @@ class IHTPSimulation extends PerformanceTestRunner {
     postPrSubmitPaymentNoticePage("true"),
     getSchemeReceivePaymentNoticePage,
     postSchemeReceivePaymentNoticePage,
+    getAreBeneficiariesKnownPage,
+    postAreBeneficiariesKnownPage("true"),
     postCYAPage,
     postCYAPage,
     getPsaDeclarationPage,
     postPsaDeclarationPage,
-    getPsaIHTPReportSubmittedPage,
-
+    getPsaIHTPReportSubmittedPage
   )
 
   setup(
     "psp-view-submissions with Organisation",
     "PSP View Submissions with Organisation"
-  ) withRequests(
+  ) withRequests (
     getLoginToIHTPPageForPsp,
     postLoginToIHTPPageForPsp,
     getYouWillNeedPageForPsp,
@@ -84,17 +84,18 @@ class IHTPSimulation extends PerformanceTestRunner {
     postPrSubmitPaymentNoticePageForPsp("false"),
     getSchemeReceivePaymentNoticePageForPsp,
     postSchemeReceivePaymentNoticePageForPsp,
+    getAreBeneficiariesKnownPageForPsp,
+    postAreBeneficiariesKnownPageForPsp("false"),
     postCYAPageForPsp,
     postCYAPageForPsp,
     getDeclarationPageForPsp,
     postDeclarationPageForPsp,
-    getIHTPReportSubmittedPageForPsp,
-
+    getIHTPReportSubmittedPageForPsp
   )
   setup(
     "psa-view-submissions with Individual",
     "PSA View Submissions with Individual"
-  ) withRequests(
+  ) withRequests (
     getLoginToIHTPPage,
     postLoginToIHTPPage,
     getReportInheritanceTaxOnPensionPage,
@@ -110,14 +111,13 @@ class IHTPSimulation extends PerformanceTestRunner {
     postEnterBirthDeathDatePage,
     getLprIndividualOrOrganisationPage,
     postLprIndividualOrOrganisationPage("individual"),
-    getLprIndividualNameChangePage,  //Usingchangenameurltoavoidaddresslookup
-    postLprIndividualNameChangePage("Joe", "Smith"), //Usingchangenameurltoavoidaddresslookup
+    getLprIndividualNameChangePage, // Usingchangenameurltoavoidaddresslookup
+    postLprIndividualNameChangePage("Joe", "Smith"), // Usingchangenameurltoavoidaddresslookup
     getCYAPage,
-    postCYAPage,
+    postCYAPage
 //    getPsaDeclarationPage,
 //    postPsaDeclarationPage,
   )
 
-
-    runSimulation()
+  runSimulation()
 }
