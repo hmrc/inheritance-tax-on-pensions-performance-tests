@@ -24,14 +24,13 @@ import io.gatling.core.check.regex.RegexCheckType
 import io.gatling.core.session.el.El
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
-
 trait BaseRequest extends ServicesConfiguration {
 
-  val baseUrl: String = baseUrlFor("inheritance-tax-on-pensions-frontend")
-  val authUrl: String = baseUrlFor("auth-login-stub")
-  val route: String = "/inheritance-tax-on-pensions/S2400000001"
-  val submissionListPath: String = s"$route/submission-list"
-  val WhatWillYouNeed: String = s"$route/start-report-you-will-need"
+  val baseUrl: String                       = baseUrlFor("inheritance-tax-on-pensions-frontend")
+  val authUrl: String                       = baseUrlFor("auth-login-stub")
+  val route: String                         = "/inheritance-tax-on-pensions/S2400000001"
+  val submissionListPath: String            = s"$route/submission-list"
+  val WhatWillYouNeed: String               = s"$route/start-report-you-will-need"
   val ReportInheritanceTaxOnPension: String = s"$route/report-inheritance-tax-on-pension"
 
   protected val CsrfPattern =
@@ -46,6 +45,5 @@ trait BaseRequest extends ServicesConfiguration {
   protected def elCharSeqExpr(value: String): Expression[CharSequence] = value.el[CharSequence]
 
   protected val locationHeaderExpr: Expression[CharSequence] = elCharSeqExpr("Location")
-
 
 }
