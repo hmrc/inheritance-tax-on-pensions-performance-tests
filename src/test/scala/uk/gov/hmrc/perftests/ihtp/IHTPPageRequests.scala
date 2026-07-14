@@ -132,52 +132,52 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("dateOfDeath.year", "2023": Expression[String])
       .check(status.is(303))
       .check(
-        header(locationHeaderExpr).is(s"$route/lpr-individual-or-organisation": String)
+        header(locationHeaderExpr).is(s"$route/pr-individual-or-organisation": String)
       )
 
-  def getLprIndividualOrOrganisationPage: HttpRequestBuilder =
-    http("Navigate to Is the legal personal representative (LPR) an individual or a member of an organisation Page")
-      .get(s"$baseUrl$route/lpr-individual-or-organisation": String)
+  def getPrIndividualOrOrganisationPage: HttpRequestBuilder =
+    http("Navigate to Is the personal representative (PR) an individual or a member of an organisation Page")
+      .get(s"$baseUrl$route/pr-individual-or-organisation": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postLprIndividualOrOrganisationPage(lprType: String): HttpRequestBuilder =
-    http("Post Is the legal personal representative (LPR) an individual or a member of an organisation Page")
-      .post(s"$baseUrl$route/lpr-individual-or-organisation": String)
+  def postPrIndividualOrOrganisationPage(lprType: String): HttpRequestBuilder =
+    http("Post Is the personal representative (PR) an individual or a member of an organisation Page")
+      .post(s"$baseUrl$route/pr-individual-or-organisation": String)
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", lprType: Expression[String])
       .check(status.is(303))
       .check(
         header(locationHeaderExpr).is(
           lprType match {
-            case "individual"   => s"$route/enter-name-lpr"
+            case "individual"   => s"$route/enter-name-pr"
             case "organisation" => s"$route/enter-organisation-name"
           }
         )
       )
 
-  def getLprIndividualNameChangePage: HttpRequestBuilder =
+  def getPrIndividualNameChangePage: HttpRequestBuilder =
     http("Navigate to Enter the name of the Individual Page- Change page")
-      .get(s"$baseUrl$route/change-name-lpr": String)
+      .get(s"$baseUrl$route/change-name-pr": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postLprIndividualNameChangePage(firstForename: String, surname: String): HttpRequestBuilder =
+  def postPrIndividualNameChangePage(firstForename: String, surname: String): HttpRequestBuilder =
     http("Enter the full name of the person managing the estate Page-change")
-      .post(s"$baseUrl$route/change-name-lpr": String)
+      .post(s"$baseUrl$route/change-name-pr": String)
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("firstForename", _ => firstForename)
       .formParam("surname", _ => surname)
       .check(status.is(303))
       .check(header(locationHeaderExpr).is(s"$route/check-your-answers": String))
 
-  def getLprOrganisationNamePage: HttpRequestBuilder =
+  def getPrOrganisationNamePage: HttpRequestBuilder =
     http("Navigate to Enter the name of the organisation Page")
       .get(s"$baseUrl$route/enter-organisation-name": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postLprOrganisationNamePage(organisationName: String): HttpRequestBuilder =
+  def postPrOrganisationNamePage(organisationName: String): HttpRequestBuilder =
     http("Post Enter the name of the organisation Page")
       .post(s"$baseUrl$route/enter-organisation-name": String)
       .formParam("csrfToken", csrfTokenExpr)
