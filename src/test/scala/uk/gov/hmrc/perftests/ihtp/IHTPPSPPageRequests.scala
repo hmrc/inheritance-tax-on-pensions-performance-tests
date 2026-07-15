@@ -127,18 +127,18 @@ object IHTPPSPPageRequests extends BaseRequest {
       .formParam("dateOfDeath.year", "2023": Expression[String])
       .check(status.is(303))
       .check(
-        header(locationHeaderExpr).is(s"$route/lpr-individual-or-organisation": String)
+        header(locationHeaderExpr).is(s"$route/pr-individual-or-organisation": String)
       )
 
-  def getLprIndividualOrOrganisationPageForPsp: HttpRequestBuilder =
-    http("Navigate to Is the legal personal representative (LPR) an individual or a member of an organisation Page")
-      .get(s"$baseUrl$route/lpr-individual-or-organisation": String)
+  def getPrIndividualOrOrganisationPageForPsp: HttpRequestBuilder =
+    http("Navigate to Is the personal representative (PR) an individual or a member of an organisation Page")
+      .get(s"$baseUrl$route/pr-individual-or-organisation": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postLprIndividualOrOrganisationPageForPsp: HttpRequestBuilder =
-    http("Post Is the legal personal representative (LPR) an individual or a member of an organisation Page")
-      .post(s"$baseUrl$route/lpr-individual-or-organisation": String)
+  def postPrIndividualOrOrganisationPageForPsp: HttpRequestBuilder =
+    http("Post Is the personal representative (PR) an individual or a member of an organisation Page")
+      .post(s"$baseUrl$route/pr-individual-or-organisation": String)
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", _ => "organisation")
       .check(status.is(303))
@@ -146,13 +146,13 @@ object IHTPPSPPageRequests extends BaseRequest {
         header(locationHeaderExpr).is(s"$route/enter-organisation-name": String)
       )
 
-  def getLprOrganisationNamePageForPsp: HttpRequestBuilder =
+  def getPrOrganisationNamePageForPsp: HttpRequestBuilder =
     http("Navigate to Enter the name of the organisation Page")
       .get(s"$baseUrl$route/enter-organisation-name": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postLprOrganisationNamePageForPsp(organisationName: String): HttpRequestBuilder =
+  def postPrOrganisationNamePageForPsp(organisationName: String): HttpRequestBuilder =
     http("Post Enter the name of the organisation Page")
       .post(s"$baseUrl$route/enter-organisation-name": String)
       .formParam("csrfToken", csrfTokenExpr)
