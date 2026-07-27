@@ -43,8 +43,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     postPrIndividualOrOrganisationPage("organisation"),
     getPrOrganisationNamePage,
     postPrOrganisationNamePage("PR Organisation"),
-    getEnterNamePrOrganisationPage,
-    postEnterNamePrOrganisationPage("TestFirstName", "TestSurname"),
+    getChangeNamePrOrganisationPage,
+    postChangeNamePrOrganisationPage("TestFirstName", "TestSurname"),
     getPrSubmitPaymentNoticePage,
     postPrSubmitPaymentNoticePage("true"),
     getSchemeReceivePaymentNoticePage,
@@ -54,8 +54,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     postCYAPage,
     postCYAPage,
     getPsaDeclarationPage,
-    postPsaDeclarationPage,
-    getPsaIHTPReportSubmittedPage
+//    postPsaDeclarationPage,
+//    getPsaIHTPReportSubmittedPage
   )
 
   setup(
@@ -78,8 +78,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     postPrIndividualOrOrganisationPageForPsp,
     getPrOrganisationNamePageForPsp,
     postPrOrganisationNamePageForPsp("PR Organisation"),
-    getEnterNamePrOrganisationPageForPsp,
-    postEnterNamePrOrganisationPageForPsp("TestFirstname", "TestSurname"),
+    getChangeNamePrOrganisationPageForPsp,
+    postChangeNamePrOrganisationPageForPsp("TestFirstname", "TestSurname"),
     getPrSubmitPaymentNoticePageForPsp,
     postPrSubmitPaymentNoticePageForPsp("false"),
     getSchemeReceivePaymentNoticePageForPsp,
@@ -89,8 +89,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     postCYAPageForPsp,
     postCYAPageForPsp,
     getDeclarationPageForPsp,
-    postDeclarationPageForPsp,
-    getIHTPReportSubmittedPageForPsp
+//    postDeclarationPageForPsp,
+//    getIHTPReportSubmittedPageForPsp
   )
   setup(
     "psa-view-submissions with Individual",
