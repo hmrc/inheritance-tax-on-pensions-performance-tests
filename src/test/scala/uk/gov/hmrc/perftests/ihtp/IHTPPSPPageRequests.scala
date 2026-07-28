@@ -215,7 +215,28 @@ object IHTPPSPPageRequests extends BaseRequest {
       .formParam("dateThePensionSchemeReceivedNoticeToPay.year", "2024": Expression[String])
       .check(status.is(303))
       .check(
-        header(locationHeaderExpr).is(s"$route/are-beneficiaries-known": String)
+        header(locationHeaderExpr).is(s"$route/select-beneficiary-type/0": String)
+      )
+
+  def getSelectBeneficiaryTypePageForPsp: HttpRequestBuilder =
+    http("Navigate to Select the type of beneficiary to add Page")
+      .get(s"$baseUrl$route/select-beneficiary-type/0": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postSelectBeneficiaryTypePageForPsp(submitOption: String): HttpRequestBuilder =
+    http("Post Select the type of beneficiary to add Page")
+      .post(s"$baseUrl$route/select-beneficiary-type/0": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", submitOption: Expression[String])
+      .check(status.is(303))
+      .check(
+        header(locationHeaderExpr).is(
+          submitOption match {
+            case "individual"   => s"$route/check-your-answers"
+            case "organisation" => s"$route/check-your-answers"
+          }
+        )
       )
 
   def getAreBeneficiariesKnownPageForPsp: HttpRequestBuilder =

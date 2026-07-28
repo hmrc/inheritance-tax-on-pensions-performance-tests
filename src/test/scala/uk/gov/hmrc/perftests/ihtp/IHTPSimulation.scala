@@ -51,9 +51,11 @@ class IHTPSimulation extends PerformanceTestRunner {
     postSchemeReceivePaymentNoticePage,
     getAreBeneficiariesKnownPage,
     postAreBeneficiariesKnownPage("true"),
+    getSelectBeneficiaryTypePage,
+    postSelectBeneficiaryTypePage("organisation"),
     postCYAPage,
     postCYAPage,
-    getPsaDeclarationPage,
+    getPsaDeclarationPage
 //    postPsaDeclarationPage,
 //    getPsaIHTPReportSubmittedPage
   )
@@ -84,11 +86,11 @@ class IHTPSimulation extends PerformanceTestRunner {
     postPrSubmitPaymentNoticePageForPsp("false"),
     getSchemeReceivePaymentNoticePageForPsp,
     postSchemeReceivePaymentNoticePageForPsp,
-    getAreBeneficiariesKnownPageForPsp,
-    postAreBeneficiariesKnownPageForPsp("false"),
+    getSelectBeneficiaryTypePageForPsp,
+    postSelectBeneficiaryTypePageForPsp("individual"),
     postCYAPageForPsp,
     postCYAPageForPsp,
-    getDeclarationPageForPsp,
+    getDeclarationPageForPsp
 //    postDeclarationPageForPsp,
 //    getIHTPReportSubmittedPageForPsp
   )
