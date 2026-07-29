@@ -251,7 +251,28 @@ object IHTPPSPPageRequests extends BaseRequest {
       .formParam("firstForename", _ => firstForename)
       .formParam("surname", _ => surname)
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/check-your-answers": String))
+      .check(header(locationHeaderExpr).is(s"$route/beneficiary-national-insurance-number/0": String))
+
+  def getBeneficiaryNationalInsuranceNumberPageForPsp: HttpRequestBuilder =
+    http("Navigate to Does Joe Doe have a National Insurance number? Page")
+      .get(s"$baseUrl$route/beneficiary-national-insurance-number/0": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postBeneficiaryNationalInsuranceNumberPageForPsp(submitOption: String): HttpRequestBuilder =
+    http("Post Does Joe Doe have a National Insurance number? Page")
+      .post(s"$baseUrl$route/beneficiary-national-insurance-number/0": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", submitOption: Expression[String])
+      .check(status.is(303))
+      .check(
+        header(locationHeaderExpr).is(
+          submitOption match {
+            case "true"  => s"$route/check-your-answers"
+            case "false" => s"$route/check-your-answers"
+          }
+        )
+      )
 
   def getAreBeneficiariesKnownPageForPsp: HttpRequestBuilder =
     http("Navigate to Did PR submit the payment notice? Page")
