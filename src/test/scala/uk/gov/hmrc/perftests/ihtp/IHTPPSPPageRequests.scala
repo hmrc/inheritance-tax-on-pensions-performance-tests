@@ -20,7 +20,6 @@ import io.gatling.core.Predef.*
 import io.gatling.core.session.Expression
 import io.gatling.http.Predef.*
 import io.gatling.http.request.builder.HttpRequestBuilder
-import uk.gov.hmrc.perftests.ihtp.IHTPPageRequests.{baseUrl, csrfTokenExpr, locationHeaderExpr, route, saveCsrfToken}
 
 object IHTPPSPPageRequests extends BaseRequest {
 
@@ -233,11 +232,26 @@ object IHTPPSPPageRequests extends BaseRequest {
       .check(
         header(locationHeaderExpr).is(
           submitOption match {
-            case "individual"   => s"$route/check-your-answers"
+            case "individual"   => s"$route/enter-name-of-beneficiary/0"
             case "organisation" => s"$route/check-your-answers"
           }
         )
       )
+
+  def getEnterNameOfBeneficiaryForPsp: HttpRequestBuilder =
+    http("Navigate to Enter the full name of the beneficiary Page")
+      .get(s"$baseUrl$route/enter-name-of-beneficiary/0": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postEnterNameOfBeneficiaryForPsp(firstForename: String, surname: String): HttpRequestBuilder =
+    http("Post Enter the full name of the beneficiary Page")
+      .post(s"$baseUrl$route/enter-name-of-beneficiary/0": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("firstForename", _ => firstForename)
+      .formParam("surname", _ => surname)
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/check-your-answers": String))
 
   def getAreBeneficiariesKnownPageForPsp: HttpRequestBuilder =
     http("Navigate to Did PR submit the payment notice? Page")

@@ -279,11 +279,26 @@ object IHTPPageRequests extends BaseRequest {
       .check(
         header(locationHeaderExpr).is(
           submitOption match {
-            case "individual"   => s"$route/check-your-answers"
+            case "individual"   => s"$route/enter-name-of-beneficiary/0"
             case "organisation" => s"$route/check-your-answers"
           }
         )
       )
+
+  def getEnterNameOfBeneficiary: HttpRequestBuilder =
+    http("Navigate to Enter the full name of the beneficiary Page")
+      .get(s"$baseUrl$route/enter-name-of-beneficiary/0": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postEnterNameOfBeneficiary(firstForename: String, surname: String): HttpRequestBuilder =
+    http("Post Enter the full name of the beneficiary Page")
+      .post(s"$baseUrl$route/enter-name-of-beneficiary/0": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("firstForename", _ => firstForename)
+      .formParam("surname", _ => surname)
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/check-your-answers": String))
 
   def getCYAPage: HttpRequestBuilder =
     http("Navigate to Check and submit the report Page")
