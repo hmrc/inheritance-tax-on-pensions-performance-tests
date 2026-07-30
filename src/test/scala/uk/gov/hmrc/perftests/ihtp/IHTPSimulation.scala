@@ -55,6 +55,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     postSelectBeneficiaryTypePage("individual"),
     getEnterNameOfBeneficiary,
     postEnterNameOfBeneficiary("Joe", "Doe"),
+    getBeneficiaryNationalInsuranceNumberPage,
+    postBeneficiaryNationalInsuranceNumberPage("true"),
     postCYAPage,
     postCYAPage,
     getPsaDeclarationPage
@@ -92,6 +94,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     postSelectBeneficiaryTypePageForPsp("individual"),
     getEnterNameOfBeneficiaryForPsp,
     postEnterNameOfBeneficiaryForPsp("Joe", "Doe"),
+    getBeneficiaryNationalInsuranceNumberPageForPsp,
+    postBeneficiaryNationalInsuranceNumberPageForPsp("true"),
     postCYAPageForPsp,
     postCYAPageForPsp,
     getDeclarationPageForPsp
