@@ -97,20 +97,40 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("firstForename", _ => firstForename)
       .formParam("surname", _ => surname)
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/enter-national-insurance-number": String))
+      .check(header(locationHeaderExpr).is(s"$route/deceased-has-ni-number": String))
 
-  def getEnterNationalInsuranceNumberPage: HttpRequestBuilder =
-    http("Navigate to Deceased has a National Insurance number Page")
-      .get(s"$baseUrl$route/enter-national-insurance-number": String)
+  def getDoesDeceasedHasNationalInsuranceNumberPage: HttpRequestBuilder =
+    http("Navigate to Does Deceased has a National Insurance number Page")
+      .get(s"$baseUrl$route/deceased-has-ni-number": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
+  def postDoesDeceasedHasNationalInsuranceNumberPage(deceasednino: String): HttpRequestBuilder =
+      http("Post Deceased has a National Insurance number Page")
+        .post(s"$baseUrl$route/deceased-has-ni-number")
+        .formParam("csrfToken", csrfTokenExpr)
+        .formParam("value", deceasednino: Expression[String])
+        .check(status.is(303))
+        .check(
+          header(locationHeaderExpr).is(
+            deceasednino match {
+              case "true" => s"$route/enter-ni-number"
+              case "false" => s"$route/reason-no-ni-number"
+            }
+          )
+        )
+
+    def getEnterNationalInsuranceNumberPage: HttpRequestBuilder =
+        http("Navigate to Enter National Insurance number of Deceased Page")
+          .get(s"$baseUrl$route/enter-ni-number": String)
+          .check(status.is(200))
+          .check(saveCsrfToken())
+
   def postEnterNationalInsuranceNumberPage(nino: String): HttpRequestBuilder =
-    http("Post Deceased has a National Insurance number Page")
-      .post(s"$baseUrl$route/enter-national-insurance-number")
+    http("Post Enter National Insurance number of Deceased Page")
+      .post(s"$baseUrl$route/enter-ni-number")
       .formParam("csrfToken", csrfTokenExpr)
-      .formParam("value", _ => "yes")
-      .formParam("nino", _ => nino)
+      .formParam("value", _ => nino)
       .check(status.is(303))
       .check(header(locationHeaderExpr).is(s"$route/enter-birth-death-date"))
 
