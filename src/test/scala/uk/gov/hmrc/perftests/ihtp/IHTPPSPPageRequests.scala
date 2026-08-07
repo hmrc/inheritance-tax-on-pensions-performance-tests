@@ -91,22 +91,23 @@ object IHTPPSPPageRequests extends BaseRequest {
       .formParam("firstForename", _ => firstForename)
       .formParam("surname", _ => surname)
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/enter-national-insurance-number": String))
-
-  def getEnterNationalInsuranceNumberPageForPsp: HttpRequestBuilder =
-    http("Navigate to Deceased has a National Insurance number Page")
-      .get(s"$baseUrl$route/enter-national-insurance-number": String)
-      .check(status.is(200))
-      .check(saveCsrfToken())
-
-  def postEnterNationalInsuranceNumberPageForPsp(nino: String): HttpRequestBuilder =
-    http("Post Deceased has a National Insurance number Page")
-      .post(s"$baseUrl$route/enter-national-insurance-number")
-      .formParam("csrfToken", csrfTokenExpr)
-      .formParam("value", _ => "yes")
-      .formParam("nino", _ => nino)
-      .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/enter-birth-death-date"))
+      .check(header(locationHeaderExpr).is(s"$route/deceased-has-ni-number": String))
+  
+//
+//  def getEnterNationalInsuranceNumberPageForPsp: HttpRequestBuilder =
+//    http("Navigate to Deceased has a National Insurance number Page")
+//      .get(s"$baseUrl$route/enter-national-insurance-number": String)
+//      .check(status.is(200))
+//      .check(saveCsrfToken())
+//
+//  def postEnterNationalInsuranceNumberPageForPsp(nino: String): HttpRequestBuilder =
+//    http("Post Deceased has a National Insurance number Page")
+//      .post(s"$baseUrl$route/enter-national-insurance-number")
+//      .formParam("csrfToken", csrfTokenExpr)
+//      .formParam("value", _ => "yes")
+//      .formParam("nino", _ => nino)
+//      .check(status.is(303))
+//      .check(header(locationHeaderExpr).is(s"$route/enter-birth-death-date"))
 
   def getEnterBirthDeathDatePageForPsp: HttpRequestBuilder =
     http("Navigate to Enter DOB and DOD of Deceased Page")
