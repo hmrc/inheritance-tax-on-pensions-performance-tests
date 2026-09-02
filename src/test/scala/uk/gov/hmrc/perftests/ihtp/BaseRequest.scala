@@ -23,6 +23,7 @@ import io.gatling.core.check.CheckBuilder
 import io.gatling.core.check.regex.RegexCheckType
 import io.gatling.core.session.el.El
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
+import uk.gov.hmrc.domain.NinoGenerator
 
 trait BaseRequest extends ServicesConfiguration {
 
@@ -45,5 +46,7 @@ trait BaseRequest extends ServicesConfiguration {
   protected def elCharSeqExpr(value: String): Expression[CharSequence] = value.el[CharSequence]
 
   protected val locationHeaderExpr: Expression[CharSequence] = elCharSeqExpr("Location")
+
+  protected val nino: String = NinoGenerator().nextNino.nino
 
 }
