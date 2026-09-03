@@ -61,13 +61,57 @@ class IHTPSimulation extends PerformanceTestRunner {
     postEnterNameOfBeneficiary("Joe", "Doe"),
     getBeneficiaryNationalInsuranceNumberPage,
     postBeneficiaryNationalInsuranceNumberPage("true"),
-    getBeneficiaryListPage,
-    postBeneficiaryListPage,
-    getCYAPage,
+    getYouAddedABeneficiaryPage,
+    postYouAddedABeneficiaryPage("false"),
     postCYAPage,
     getPsaDeclarationPage
 //    postPsaDeclarationPage,
 //    getPsaIHTPReportSubmittedPage
+  )
+
+  setup(
+    "psa-view-submissions for an Organisation with beneficiary type of Organisation",
+    "PSA View Submissions for an Organisation with beneficiary type of Organisation"
+  ) withRequests(
+    getLoginToIHTPPage,
+    postLoginToIHTPPage,
+    getReportInheritanceTaxOnPensionPage,
+    getYouWillNeedPage,
+    postYouWillNeedPage,
+    getEnterInheritanceTaxReferencePage,
+    postEnterInheritanceTaxReferencePage("A123456/25A"),
+    getNameOfDeceasedPage,
+    postNameOfDeceasedPage("John", "Smith"),
+    getDoesDeceasedHasNationalInsuranceNumberPage,
+    postDoesDeceasedHasNationalInsuranceNumberPage("true"),
+    getEnterNationalInsuranceNumberPage,
+    postEnterNationalInsuranceNumberPage("AB123456C"),
+    getEnterBirthDeathDatePage,
+    postEnterBirthDeathDatePage,
+    getPrIndividualOrOrganisationPage,
+    postPrIndividualOrOrganisationPage("organisation"),
+    getPrOrganisationNamePage,
+    postPrOrganisationNamePage("PR Organisation"),
+    getNamePrOrganisationPage,
+    postNamePrOrganisationPage("TestFirstName", "TestSurname"),
+    seedPrAddress,
+    getPrSubmitPaymentNoticePage,
+    postPrSubmitPaymentNoticePage("true"),
+    getSchemeReceivePaymentNoticePage,
+    postSchemeReceivePaymentNoticePage,
+    getAreBeneficiariesKnownPage,
+    postAreBeneficiariesKnownPage("true"),
+    getSelectBeneficiaryTypePage,
+    postSelectBeneficiaryTypePage("organisation"),
+    getEnterNameOfTrust,
+    postEnterNameOfTrust("Test Organisation & Co ltd."),
+    getYouAddedABeneficiaryPage,
+    postYouAddedABeneficiaryPage("false"),
+    postCYAPage,
+    postCYAPage,
+    getPsaDeclarationPage
+    //    postPsaDeclarationPage,
+    //    getPsaIHTPReportSubmittedPage
   )
 
   setup(
@@ -107,9 +151,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     postEnterNameOfBeneficiaryForPsp("Joe", "Doe"),
     getBeneficiaryNationalInsuranceNumberPageForPsp,
     postBeneficiaryNationalInsuranceNumberPageForPsp("true"),
-    getBeneficiaryListPage,
-    postBeneficiaryListPage,
-    getCYAPageForPsp,
+    getYouAddedABeneficiaryPageForPsp,
+    postYouAddedABeneficiaryPageForPsp("false"),
     postCYAPageForPsp,
     getDeclarationPageForPsp
 //    postDeclarationPageForPsp,
