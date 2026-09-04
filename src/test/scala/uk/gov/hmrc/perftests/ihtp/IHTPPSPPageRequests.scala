@@ -269,7 +269,28 @@ object IHTPPSPPageRequests extends BaseRequest {
       .check(
         header(locationHeaderExpr).is(
           submitOption match {
-            case "true"  => s"$route/check-your-answers"
+            case "true"  => s"$route/add-beneficiary"
+            case "false" => s"$route/add-beneficiary"
+          }
+        )
+      )
+
+  def getYouAddedABeneficiaryPageForPsp: HttpRequestBuilder =
+    http("Navigate to You have added 1 beneficiary Page")
+      .get(s"$baseUrl$route/add-beneficiary": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postYouAddedABeneficiaryPageForPsp(submitOption: String): HttpRequestBuilder =
+    http("Post You have added 1 beneficiary Page")
+      .post(s"$baseUrl$route/add-beneficiary": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", submitOption: Expression[String])
+      .check(status.is(303))
+      .check(
+        header(locationHeaderExpr).is(
+          submitOption match {
+            case "true" => s"$route/check-your-answers"
             case "false" => s"$route/check-your-answers"
           }
         )
