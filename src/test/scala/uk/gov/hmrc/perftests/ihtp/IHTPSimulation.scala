@@ -19,6 +19,7 @@ package uk.gov.hmrc.perftests.ihtp
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.ihtp.IHTPPSPPageRequests.*
 import uk.gov.hmrc.perftests.ihtp.IHTPPageRequests.*
+import uk.gov.hmrc.perftests.ihtp.TestOnlyRequests.seedPrAddress
 
 class IHTPSimulation extends PerformanceTestRunner {
 
@@ -45,8 +46,9 @@ class IHTPSimulation extends PerformanceTestRunner {
     postPrIndividualOrOrganisationPage("organisation"),
     getPrOrganisationNamePage,
     postPrOrganisationNamePage("PR Organisation"),
-    getChangeNamePrOrganisationPage,
-    postChangeNamePrOrganisationPage("TestFirstName", "TestSurname"),
+    getNamePrOrganisationPage,
+    postNamePrOrganisationPage("TestFirstName", "TestSurname"),
+    seedPrAddress,
     getPrSubmitPaymentNoticePage,
     postPrSubmitPaymentNoticePage("true"),
     getSchemeReceivePaymentNoticePage,
@@ -59,7 +61,9 @@ class IHTPSimulation extends PerformanceTestRunner {
     postEnterNameOfBeneficiary("Joe", "Doe"),
     getBeneficiaryNationalInsuranceNumberPage,
     postBeneficiaryNationalInsuranceNumberPage("true"),
-    postCYAPage,
+    getBeneficiaryListPage,
+    postBeneficiaryListPage,
+    getCYAPage,
     postCYAPage,
     getPsaDeclarationPage
 //    postPsaDeclarationPage,
@@ -90,8 +94,9 @@ class IHTPSimulation extends PerformanceTestRunner {
     postPrIndividualOrOrganisationPageForPsp,
     getPrOrganisationNamePageForPsp,
     postPrOrganisationNamePageForPsp("PR Organisation"),
-    getChangeNamePrOrganisationPageForPsp,
-    postChangeNamePrOrganisationPageForPsp("TestFirstname", "TestSurname"),
+    getNamePrOrganisationPageForPsp,
+    postNamePrOrganisationPageForPsp("TestFirstname", "TestSurname"),
+    seedPrAddress,
     getPrSubmitPaymentNoticePageForPsp,
     postPrSubmitPaymentNoticePageForPsp("false"),
     getSchemeReceivePaymentNoticePageForPsp,
@@ -102,7 +107,9 @@ class IHTPSimulation extends PerformanceTestRunner {
     postEnterNameOfBeneficiaryForPsp("Joe", "Doe"),
     getBeneficiaryNationalInsuranceNumberPageForPsp,
     postBeneficiaryNationalInsuranceNumberPageForPsp("true"),
-    postCYAPageForPsp,
+    getBeneficiaryListPage,
+    postBeneficiaryListPage,
+    getCYAPageForPsp,
     postCYAPageForPsp,
     getDeclarationPageForPsp
 //    postDeclarationPageForPsp,
@@ -129,8 +136,15 @@ class IHTPSimulation extends PerformanceTestRunner {
     postEnterBirthDeathDatePage,
     getPrIndividualOrOrganisationPage,
     postPrIndividualOrOrganisationPage("individual"),
-    getPrIndividualNameChangePage, // Usingchangenameurltoavoidaddresslookup
-    postPrIndividualNameChangePage("Joe", "Smith"), // Usingchangenameurltoavoidaddresslookup
+    getPrIndividualNamePage,
+    postPrIndividualNamePage("Joe", "Smith"),
+    seedPrAddress,
+    getPrSubmitPaymentNoticePage,
+    postPrSubmitPaymentNoticePage("true"),
+    getSchemeReceivePaymentNoticePage,
+    postSchemeReceivePaymentNoticePage,
+    getAreBeneficiariesKnownPage,
+    postAreBeneficiariesKnownPage("false"),
     getCYAPage,
     postCYAPage
 //    getPsaDeclarationPage,
