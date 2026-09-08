@@ -176,20 +176,21 @@ object IHTPPageRequests extends BaseRequest {
         )
       )
 
-  def getPrIndividualNameChangePage: HttpRequestBuilder =
-    http("Navigate to Enter the name of the Individual Page- Change page")
-      .get(s"$baseUrl$route/change-name-pr": String)
+  def getPrIndividualNamePage: HttpRequestBuilder =
+    http("Navigate to Enter the name of the Individual Page")
+      .get(s"$baseUrl$route/enter-name-pr": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postPrIndividualNameChangePage(firstForename: String, surname: String): HttpRequestBuilder =
-    http("Enter the full name of the person managing the estate Page-change")
-      .post(s"$baseUrl$route/change-name-pr": String)
+  def postPrIndividualNamePage(firstForename: String, surname: String): HttpRequestBuilder =
+    http("Enter the full name of the person managing the estate Page")
+      .post(s"$baseUrl$route/enter-name-pr": String)
+      .disableFollowRedirect
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("firstForename", _ => firstForename)
       .formParam("surname", _ => surname)
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/check-your-answers": String))
+      .check(header(locationHeaderExpr).is(s"$route/enter-pr-address": String))
 
   def getPrOrganisationNamePage: HttpRequestBuilder =
     http("Navigate to Enter the name of the organisation Page")
@@ -207,20 +208,21 @@ object IHTPPageRequests extends BaseRequest {
         header(locationHeaderExpr).is(s"$route/enter-name-pr-organisation": String)
       )
 
-  def getChangeNamePrOrganisationPage: HttpRequestBuilder =
+  def getNamePrOrganisationPage: HttpRequestBuilder =
     http("Navigate to Enter the full name of the PR at <Organisation name> Page")
-      .get(s"$baseUrl$route/change-name-pr-organisation": String)
+      .get(s"$baseUrl$route/enter-name-pr-organisation": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postChangeNamePrOrganisationPage(firstForename: String, surname: String): HttpRequestBuilder =
+  def postNamePrOrganisationPage(firstForename: String, surname: String): HttpRequestBuilder =
     http("Post Enter the full name of the PR at <Organisation name> Page")
-      .post(s"$baseUrl$route/change-name-pr-organisation": String)
+      .post(s"$baseUrl$route/enter-name-pr-organisation": String)
+      .disableFollowRedirect
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("firstForename", _ => firstForename)
       .formParam("surname", _ => surname)
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/check-your-answers": String))
+      .check(header(locationHeaderExpr).is(s"$route/enter-pr-organisation-address": String))
 
   def getPrSubmitPaymentNoticePage: HttpRequestBuilder =
     http("Navigate to Did PR submit the payment notice? Page")
@@ -332,14 +334,21 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", submitOption: Expression[String])
       .check(status.is(303))
-      .check(
-        header(locationHeaderExpr).is(
-          submitOption match {
-            case "true"  => s"$route/check-your-answers"
-            case "false" => s"$route/check-your-answers"
-          }
-        )
-      )
+      .check(header(locationHeaderExpr).is(s"$route/add-beneficiary": String))
+
+  def getBeneficiaryListPage: HttpRequestBuilder =
+    http("Navigate to the beneficiary list Page")
+      .get(s"$baseUrl$route/add-beneficiary": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postBeneficiaryListPage: HttpRequestBuilder =
+    http("Continue without adding another beneficiary")
+      .post(s"$baseUrl$route/add-beneficiary": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", _ => "false")
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/check-your-answers": String))
 
   def getCYAPage: HttpRequestBuilder =
     http("Navigate to Check and submit the report Page")

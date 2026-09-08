@@ -28,7 +28,8 @@ trait BaseRequest extends ServicesConfiguration {
 
   val baseUrl: String                       = baseUrlFor("inheritance-tax-on-pensions-frontend")
   val authUrl: String                       = baseUrlFor("auth-login-stub")
-  val route: String                         = "/inheritance-tax-on-pensions/S2400000001"
+  val srn: String                           = "S2400000001"
+  val route: String                         = s"/inheritance-tax-on-pensions/$srn"
   val submissionListPath: String            = s"$route/submission-list"
   val WhatWillYouNeed: String               = s"$route/start-report-you-will-need"
   val ReportInheritanceTaxOnPension: String = s"$route/report-inheritance-tax-on-pension"

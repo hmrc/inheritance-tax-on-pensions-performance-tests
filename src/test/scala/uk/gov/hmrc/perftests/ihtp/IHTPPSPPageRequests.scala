@@ -162,20 +162,21 @@ object IHTPPSPPageRequests extends BaseRequest {
         header(locationHeaderExpr).is(s"$route/enter-name-pr-organisation": String)
       )
 
-  def getChangeNamePrOrganisationPageForPsp: HttpRequestBuilder =
+  def getNamePrOrganisationPageForPsp: HttpRequestBuilder =
     http("Navigate to Enter the full name of the PR at <Organisation name> Page")
-      .get(s"$baseUrl$route/change-name-pr-organisation": String)
+      .get(s"$baseUrl$route/enter-name-pr-organisation": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postChangeNamePrOrganisationPageForPsp(firstForename: String, surname: String): HttpRequestBuilder =
+  def postNamePrOrganisationPageForPsp(firstForename: String, surname: String): HttpRequestBuilder =
     http("Post Enter the full name of the PR at <Organisation name> Page")
-      .post(s"$baseUrl$route/change-name-pr-organisation": String)
+      .post(s"$baseUrl$route/enter-name-pr-organisation": String)
+      .disableFollowRedirect
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("firstForename", _ => firstForename)
       .formParam("surname", _ => surname)
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/check-your-answers": String))
+      .check(header(locationHeaderExpr).is(s"$route/enter-pr-organisation-address": String))
 
   def getPrSubmitPaymentNoticePageForPsp: HttpRequestBuilder =
     http("Navigate to Did PR submit the payment notice? Page")
@@ -266,14 +267,7 @@ object IHTPPSPPageRequests extends BaseRequest {
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", submitOption: Expression[String])
       .check(status.is(303))
-      .check(
-        header(locationHeaderExpr).is(
-          submitOption match {
-            case "true"  => s"$route/check-your-answers"
-            case "false" => s"$route/check-your-answers"
-          }
-        )
-      )
+      .check(header(locationHeaderExpr).is(s"$route/add-beneficiary": String))
 
   def getAreBeneficiariesKnownPageForPsp: HttpRequestBuilder =
     http("Navigate to Did PR submit the payment notice? Page")
