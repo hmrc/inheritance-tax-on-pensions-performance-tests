@@ -126,7 +126,7 @@ object IHTPPageRequests extends BaseRequest {
           .check(status.is(200))
           .check(saveCsrfToken())
 
-  def postEnterNationalInsuranceNumberPage(nino: String): HttpRequestBuilder =
+  def postEnterNationalInsuranceNumberPage(): HttpRequestBuilder =
     http("Post Enter National Insurance number of Deceased Page")
       .post(s"$baseUrl$route/enter-ni-number")
       .formParam("csrfToken", csrfTokenExpr)
