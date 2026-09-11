@@ -302,7 +302,7 @@ object IHTPPageRequests extends BaseRequest {
         header(locationHeaderExpr).is(
           submitOption match {
             case "individual"   => s"$route/enter-name-of-beneficiary/0"
-            case "organisation" => s"$route/check-your-answers"
+            case "organisation" => s"$route/beneficiary-organisation-details/0"
           }
         )
       )
@@ -322,6 +322,20 @@ object IHTPPageRequests extends BaseRequest {
       .check(status.is(303))
       .check(header(locationHeaderExpr).is(s"$route/beneficiary-national-insurance-number/0": String))
 
+  def getEnterNameOfTrust: HttpRequestBuilder =
+    http("Navigate to Enter the name of the trust Page")
+      .get(s"$baseUrl$route/beneficiary-organisation-details/0": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postEnterNameOfTrust(trustName: String): HttpRequestBuilder =
+    http("Post Enter the name of the trust Page")
+      .post(s"$baseUrl$route/beneficiary-organisation-details/0": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("trustName", _ => trustName)
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/add-beneficiary": String))
+
   def getBeneficiaryNationalInsuranceNumberPage: HttpRequestBuilder =
     http("Navigate to Does Joe Doe have a National Insurance number? Page")
       .get(s"$baseUrl$route/beneficiary-national-insurance-number/0": String)
@@ -334,21 +348,35 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", submitOption: Expression[String])
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/add-beneficiary": String))
+      .check(
+        header(locationHeaderExpr).is(
+          submitOption match {
+            case "true"  => s"$route/add-beneficiary"
+            case "false" => s"$route/add-beneficiary"
+          }
+        )
+      )
 
-  def getBeneficiaryListPage: HttpRequestBuilder =
-    http("Navigate to the beneficiary list Page")
+  def getYouAddedABeneficiaryPage: HttpRequestBuilder =
+    http("Navigate to You have added 1 beneficiary Page")
       .get(s"$baseUrl$route/add-beneficiary": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postBeneficiaryListPage: HttpRequestBuilder =
-    http("Continue without adding another beneficiary")
+  def postYouAddedABeneficiaryPage(submitOption: String): HttpRequestBuilder =
+    http("Post You have added 1 beneficiary Page")
       .post(s"$baseUrl$route/add-beneficiary": String)
       .formParam("csrfToken", csrfTokenExpr)
-      .formParam("value", _ => "false")
+      .formParam("value", submitOption: Expression[String])
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/check-your-answers": String))
+      .check(
+        header(locationHeaderExpr).is(
+          submitOption match {
+            case "true" => s"$route/check-your-answers"
+            case "false" => s"$route/check-your-answers"
+          }
+        )
+      )
 
   def getCYAPage: HttpRequestBuilder =
     http("Navigate to Check and submit the report Page")
