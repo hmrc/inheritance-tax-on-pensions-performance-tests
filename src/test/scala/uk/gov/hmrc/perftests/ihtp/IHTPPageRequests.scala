@@ -119,7 +119,7 @@ object IHTPPageRequests extends BaseRequest {
       .check(
         header(locationHeaderExpr).is(
           deceasednino match {
-            case "true"  => s"$route/enter-ni-number"
+            case "true" => s"$route/enter-ni-number"
             case "false" => s"$route/reason-no-ni-number"
           }
         )
@@ -154,7 +154,7 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("dateOfBirth.year", "1990": Expression[String])
       .formParam("dateOfDeath.day", "09": Expression[String])
       .formParam("dateOfDeath.month", "11": Expression[String])
-      .formParam("dateOfDeath.year", "2023": Expression[String])
+      .formParam("dateOfDeath.year", "2025": Expression[String])
       .check(status.is(303))
       .check(
         header(locationHeaderExpr).is(s"$route/pr-individual-or-organisation": String)
@@ -175,7 +175,7 @@ object IHTPPageRequests extends BaseRequest {
       .check(
         header(locationHeaderExpr).is(
           lprType match {
-            case "individual"   => s"$route/enter-name-pr"
+            case "individual" => s"$route/enter-name-pr"
             case "organisation" => s"$route/enter-organisation-name"
           }
         )
@@ -230,13 +230,13 @@ object IHTPPageRequests extends BaseRequest {
       .check(header(locationHeaderExpr).is(s"$route/enter-pr-organisation-address": String))
 
   def getPrSubmitPaymentNoticePage: HttpRequestBuilder =
-    http("Navigate to Did PR submit the payment notice? Page")
+    http("Navigate to Who submitted the payment notice? Page")
       .get(s"$baseUrl$route/pr-submit-payment-notice": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
   def postPrSubmitPaymentNoticePage(submitOption: String): HttpRequestBuilder =
-    http("Post Did PR submit the payment notice? Page")
+    http("Post Who submitted the payment notice Page")
       .post(s"$baseUrl$route/pr-submit-payment-notice": String)
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", submitOption: Expression[String])
@@ -244,7 +244,7 @@ object IHTPPageRequests extends BaseRequest {
       .check(
         header(locationHeaderExpr).is(
           submitOption match {
-            case "true"  => s"$route/scheme-receive-payment-notice"
+            case "true" => s"$route/scheme-receive-payment-notice"
             case "false" => s"$route/scheme-receive-payment-notice"
           }
         )
@@ -258,26 +258,29 @@ object IHTPPageRequests extends BaseRequest {
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postSchemeReceivePaymentNoticePage: HttpRequestBuilder =
+  def postSchemeReceivePaymentNoticePage(expectedNextUrl: String): HttpRequestBuilder =
     http("Post When did Open Single Trust Scheme with Indiv Establisher and Trustees receive the payment notice? Page")
       .post(s"$baseUrl$route/scheme-receive-payment-notice": String)
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("dateThePensionSchemeReceivedNoticeToPay.day", "09": Expression[String])
-      .formParam("dateThePensionSchemeReceivedNoticeToPay.month", "11": Expression[String])
-      .formParam("dateThePensionSchemeReceivedNoticeToPay.year", "2024": Expression[String])
+      .formParam("dateThePensionSchemeReceivedNoticeToPay.month", "04": Expression[String])
+      .formParam("dateThePensionSchemeReceivedNoticeToPay.year", "2026": Expression[String])
       .check(status.is(303))
-      .check(
-        header(locationHeaderExpr).is(s"$route/are-beneficiaries-known": String)
+      .check( header(locationHeaderExpr).is(
+        expectedNextUrl match {
+          case "AddBeneficiary" => s"$route/are-beneficiaries-known"
+          case "SelectBeneficiary" => s"$route/select-beneficiary-type/0"
+        }
+    )
       )
-
   def getAreBeneficiariesKnownPage: HttpRequestBuilder =
-    http("Navigate to Did PR submit the payment notice? Page")
+    http("Navigate to Are the beneficiaries known Page")
       .get(s"$baseUrl$route/are-beneficiaries-known": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
   def postAreBeneficiariesKnownPage(submitOption: String): HttpRequestBuilder =
-    http("Post Did PR submit the payment notice? Page")
+    http("Post Are the beneficiaries known Page")
       .post(s"$baseUrl$route/are-beneficiaries-known": String)
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", submitOption: Expression[String])
@@ -286,10 +289,24 @@ object IHTPPageRequests extends BaseRequest {
         header(locationHeaderExpr).is(
           submitOption match {
             case "true"  => s"$route/select-beneficiary-type/0"
-            case "false" => s"$route/check-your-answers"
+            case "false" => s"$route/enter-iht-payable"
           }
         )
       )
+
+  def getEnterInheritanceTaxPayable: HttpRequestBuilder =
+    http("Navigate to Enter the Inheritance Tax reference number Page")
+      .get(s"$baseUrl$route/enter-iht-payable": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def PostEnterInheritanceTaxPayable(taxAmount: String): HttpRequestBuilder =
+    http("Post Enter the Inheritance Tax reference number Page")
+      .post(s"$baseUrl$route/enter-iht-payable": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", _ => taxAmount)
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/check-your-answers": String))
 
   def getSelectBeneficiaryTypePage: HttpRequestBuilder =
     http("Navigate to Select the type of beneficiary to add Page")
@@ -347,18 +364,23 @@ object IHTPPageRequests extends BaseRequest {
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postBeneficiaryNationalInsuranceNumberPage(submitOption: String): HttpRequestBuilder =
+  def postBeneficiaryNationalInsuranceNumberPage(paymentNotice: String,submitOption:String): HttpRequestBuilder =
     http("Post Does Joe Doe have a National Insurance number? Page")
       .post(s"$baseUrl$route/beneficiary-national-insurance-number/0": String)
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", submitOption: Expression[String])
       .check(status.is(303))
       .check(
-        header(locationHeaderExpr).is(
-          submitOption match {
-            case "true"  => s"$route/add-beneficiary"
-            case "false" => s"$route/add-beneficiary"
-          }
+        header(locationHeaderExpr).is(submitOption match {
+          case "true" =>
+            paymentNotice match {
+              case "false" => s"$route/check-your-answers"
+              case "true"  => s"$route/add-beneficiary"
+            }
+          case "false" =>
+            // route for when user selects No
+            s"$route/check-your-answers"
+        }
         )
       )
 
@@ -377,7 +399,7 @@ object IHTPPageRequests extends BaseRequest {
       .check(
         header(locationHeaderExpr).is(
           submitOption match {
-            case "true"  => s"$route/check-your-answers"
+            case "true"  => s"$route/select-beneficiary-type/1"
             case "false" => s"$route/check-your-answers"
           }
         )

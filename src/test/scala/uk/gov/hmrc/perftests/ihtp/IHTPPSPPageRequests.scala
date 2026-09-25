@@ -280,8 +280,8 @@ object IHTPPSPPageRequests extends BaseRequest {
       .check(
         header(locationHeaderExpr).is(
           submitOption match {
-            case "true"  => s"$route/add-beneficiary"
-            case "false" => s"$route/add-beneficiary"
+            case "true"  => s"$route/check-your-answers"
+            case "false" => s"$route/check-your-answers"
           }
         )
       )

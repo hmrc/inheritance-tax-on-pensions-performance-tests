@@ -24,7 +24,7 @@ import uk.gov.hmrc.perftests.ihtp.TestOnlyRequests.seedPrAddress
 class IHTPSimulation extends PerformanceTestRunner {
 
   setup(
-    "psa-view-submissions with Organisation",
+    "psa-view-submissions-with-organisation",
     "PSA View Submissions with Organisation"
   ) withRequests (
     getLoginToIHTPPage,
@@ -52,7 +52,7 @@ class IHTPSimulation extends PerformanceTestRunner {
     getPrSubmitPaymentNoticePage,
     postPrSubmitPaymentNoticePage("true"),
     getSchemeReceivePaymentNoticePage,
-    postSchemeReceivePaymentNoticePage,
+    postSchemeReceivePaymentNoticePage("AddBeneficiary"),
     getAreBeneficiariesKnownPage,
     postAreBeneficiariesKnownPage("true"),
     getSelectBeneficiaryTypePage,
@@ -60,7 +60,7 @@ class IHTPSimulation extends PerformanceTestRunner {
     getEnterNameOfBeneficiary,
     postEnterNameOfBeneficiary("BeneficiaryFirstName", "BeneficiarySurnameName"),
     getBeneficiaryNationalInsuranceNumberPage,
-    postBeneficiaryNationalInsuranceNumberPage("true"),
+    postBeneficiaryNationalInsuranceNumberPage("true","true"),
     getYouAddedABeneficiaryPage,
     postYouAddedABeneficiaryPage("false"),
     postCYAPage,
@@ -71,7 +71,7 @@ class IHTPSimulation extends PerformanceTestRunner {
 
   setup(
     "psa-view-submissions-for-an-organisation-with-beneficiary-type-of-organisation",
-    "PSA View Submissions for an Organisation with beneficiary type of Organisation"
+    "PSA View Submissions For An Organisation With Beneficiary Type Of Organisation"
   ) withRequests (
     getLoginToIHTPPage,
     postLoginToIHTPPage,
@@ -98,7 +98,7 @@ class IHTPSimulation extends PerformanceTestRunner {
     getPrSubmitPaymentNoticePage,
     postPrSubmitPaymentNoticePage("true"),
     getSchemeReceivePaymentNoticePage,
-    postSchemeReceivePaymentNoticePage,
+    postSchemeReceivePaymentNoticePage("AddBeneficiary"),
     getAreBeneficiariesKnownPage,
     postAreBeneficiariesKnownPage("true"),
     getSelectBeneficiaryTypePage,
@@ -115,7 +115,7 @@ class IHTPSimulation extends PerformanceTestRunner {
   )
 
   setup(
-    "psp-view-submissions with Organisation",
+    "psp-view-submissions-with-organisation",
     "PSP View Submissions with Organisation"
   ) withRequests (
     getLoginToIHTPPageForPsp,
@@ -131,8 +131,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     postDoesDeceasedHasNationalInsuranceNumberPage("true"),
     getEnterNationalInsuranceNumberPage,
     postEnterNationalInsuranceNumberPage(),
-//    getEnterNationalInsuranceNumberPageForPsp,
-//    postEnterNationalInsuranceNumberPageForPsp("AB123456C"),
+//  getEnterNationalInsuranceNumberPageForPsp,
+//  postEnterNationalInsuranceNumberPageForPsp("AB123456C"),
     getEnterBirthDeathDatePageForPsp,
     postEnterBirthDeathDatePageForPsp,
     getPrIndividualOrOrganisationPageForPsp,
@@ -154,12 +154,13 @@ class IHTPSimulation extends PerformanceTestRunner {
     postBeneficiaryNationalInsuranceNumberPageForPsp("true"),
     postCYAPageForPsp,
     getDeclarationPageForPsp
-//    postDeclarationPageForPsp,
-//    getIHTPReportSubmittedPageForPsp
+//  postDeclarationPageForPsp,
+//  getIHTPReportSubmittedPageForPsp
   )
+
   setup(
-    "psa-view-submissions with Individual",
-    "PSA View Submissions with Individual"
+    "psa-view-submissions-with-individual-no-beneficiary-known",
+    "PSA View Submissions with Individual-No-Beneficiary-Known"
   ) withRequests (
     getLoginToIHTPPage,
     postLoginToIHTPPage,
@@ -184,13 +185,55 @@ class IHTPSimulation extends PerformanceTestRunner {
     getPrSubmitPaymentNoticePage,
     postPrSubmitPaymentNoticePage("true"),
     getSchemeReceivePaymentNoticePage,
-    postSchemeReceivePaymentNoticePage,
+    postSchemeReceivePaymentNoticePage("AddBeneficiary"),
     getAreBeneficiariesKnownPage,
     postAreBeneficiariesKnownPage("false"),
+    getEnterInheritanceTaxPayable,
+    PostEnterInheritanceTaxPayable("£5000"),
     getCYAPage,
-    postCYAPage
-//    getPsaDeclarationPage,
+    postCYAPage,
+   getPsaDeclarationPage,
 //    postPsaDeclarationPage,
+  )
+
+  setup(
+    "psa-view-submissions-with-no-submission-notice",
+    "PSA View Submissions with No Submission Notice"
+  ) withRequests (
+    getLoginToIHTPPage,
+    postLoginToIHTPPage,
+    getReportInheritanceTaxOnPensionPage,
+    getYouWillNeedPage,
+    postYouWillNeedPage,
+    getEnterInheritanceTaxReferencePage,
+    postEnterInheritanceTaxReferencePage("A123456/25A"),
+    getNameOfDeceasedPage,
+    postNameOfDeceasedPage("DeceasedFirstName", "DeceasedSurnameName"),
+    getDoesDeceasedHasNationalInsuranceNumberPage,
+    postDoesDeceasedHasNationalInsuranceNumberPage("true"),
+    getEnterNationalInsuranceNumberPage,
+    postEnterNationalInsuranceNumberPage(),
+    getEnterBirthDeathDatePage,
+    postEnterBirthDeathDatePage,
+    getPrIndividualOrOrganisationPage,
+    postPrIndividualOrOrganisationPage("organisation"),
+    getPrOrganisationNamePage,
+    postPrOrganisationNamePage("PR Organisation"),
+    getNamePrOrganisationPage,
+    postNamePrOrganisationPage("TestFirstName", "TestSurname"),
+    seedPrAddress,
+    getPrSubmitPaymentNoticePage,
+    postPrSubmitPaymentNoticePage("false"),
+    getSchemeReceivePaymentNoticePage,
+    postSchemeReceivePaymentNoticePage("SelectBeneficiary"),
+    getSelectBeneficiaryTypePage,
+    postSelectBeneficiaryTypePage("individual"),
+    getEnterNameOfBeneficiary,
+    postEnterNameOfBeneficiary("BeneficiaryFirstName", "BeneficiarySurnameName"),
+    getBeneficiaryNationalInsuranceNumberPage,
+    postBeneficiaryNationalInsuranceNumberPage("false","false"),
+    postCYAPage,
+    getPsaDeclarationPage
   )
 
   setup(
