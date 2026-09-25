@@ -54,7 +54,7 @@ class IHTPSimulation extends PerformanceTestRunner {
     getSchemeReceivePaymentNoticePage,
     postSchemeReceivePaymentNoticePage("AddBeneficiary"),
     getAreBeneficiariesKnownPage,
-    postAreBeneficiariesKnownPage("true"),
+    postAreBeneficiariesKnownPage("true"),  
     getSelectBeneficiaryTypePage,
     postSelectBeneficiaryTypePage("individual"),
     getEnterNameOfBeneficiary,
@@ -107,7 +107,7 @@ class IHTPSimulation extends PerformanceTestRunner {
     postEnterNameOfTrust("Test Organisation & Co ltd."),
     getYouAddedABeneficiaryPage,
     postYouAddedABeneficiaryPage("false"),
-    postCYAPage,
+    postCYAPage, 
     postCYAPage,
     getPsaDeclarationPage
     //    postPsaDeclarationPage,
