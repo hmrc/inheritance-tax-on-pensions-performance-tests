@@ -364,25 +364,21 @@ object IHTPPageRequests extends BaseRequest {
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postBeneficiaryNationalInsuranceNumberPage(submitOption:String,paymentNotice: String): HttpRequestBuilder =
+  def postBeneficiaryNationalInsuranceNumberPage(submitOption: String): HttpRequestBuilder =
     http("Post Does Joe Doe have a National Insurance number? Page")
       .post(s"$baseUrl$route/beneficiary-national-insurance-number/0": String)
+      .disableFollowRedirect
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", submitOption: Expression[String])
       .check(status.is(303))
-      .check(
-        header(locationHeaderExpr).is(submitOption match {
-          case "true" =>
-            paymentNotice match {
-              case "false" => s"$route/check-your-answers"
-              case "true"  => s"$route/add-beneficiary"
-            }
-          case "false" =>
-            // route for when user selects No
-            s"$route/check-your-answers"
-        }
-        )
-      )
+      .check(header(locationHeaderExpr).is(s"$route/add-beneficiary": String))
+
+  def getBeneficiaryListRedirectToCYA: HttpRequestBuilder =
+    http("Redirect to Check your answers when someone else submitted the payment notice")
+      .get(s"$baseUrl$route/add-beneficiary": String)
+      .disableFollowRedirect
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/check-your-answers": String))
 
   def getYouAddedABeneficiaryPage: HttpRequestBuilder =
     http("Navigate to You have added 1 beneficiary Page")
