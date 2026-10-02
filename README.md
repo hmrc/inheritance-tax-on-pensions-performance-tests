@@ -1,7 +1,5 @@
 # Inheritance Tax on Pensions Performance Tests
 
-Template of a performance test repository
-
 ### Address lookup setup
 
 In order to not hit the actual Address lookup a test only endpoint has been created. To set this up run the IHTP frontend with its test-only router enabled by:
