@@ -119,7 +119,7 @@ object IHTPPageRequests extends BaseRequest {
       .check(
         header(locationHeaderExpr).is(
           deceasednino match {
-            case "true" => s"$route/enter-ni-number"
+            case "true"  => s"$route/enter-ni-number"
             case "false" => s"$route/reason-no-ni-number"
           }
         )
@@ -175,7 +175,7 @@ object IHTPPageRequests extends BaseRequest {
       .check(
         header(locationHeaderExpr).is(
           lprType match {
-            case "individual" => s"$route/enter-name-pr"
+            case "individual"   => s"$route/enter-name-pr"
             case "organisation" => s"$route/enter-organisation-name"
           }
         )
@@ -244,7 +244,7 @@ object IHTPPageRequests extends BaseRequest {
       .check(
         header(locationHeaderExpr).is(
           submitOption match {
-            case "true" => s"$route/scheme-receive-payment-notice"
+            case "true"  => s"$route/scheme-receive-payment-notice"
             case "false" => s"$route/scheme-receive-payment-notice"
           }
         )
@@ -266,14 +266,15 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("dateThePensionSchemeReceivedNoticeToPay.month", "04": Expression[String])
       .formParam("dateThePensionSchemeReceivedNoticeToPay.year", "2026": Expression[String])
       .check(status.is(303))
-      .check( header(locationHeaderExpr).is(
-        expectedNextUrl match {
-          case "AddBeneficiary" => s"$route/are-beneficiaries-known"
-          case "SelectBeneficiary" => s"$route/select-beneficiary-type/0"
-        }
-    )
+      .check(
+        header(locationHeaderExpr).is(
+          expectedNextUrl match {
+            case "AddBeneficiary"    => s"$route/are-beneficiaries-known"
+            case "SelectBeneficiary" => s"$route/select-beneficiary-type/0"
+          }
+        )
       )
-  def getAreBeneficiariesKnownPage: HttpRequestBuilder =
+  def getAreBeneficiariesKnownPage: HttpRequestBuilder                                =
     http("Navigate to Are the beneficiaries known Page")
       .get(s"$baseUrl$route/are-beneficiaries-known": String)
       .check(status.is(200))
