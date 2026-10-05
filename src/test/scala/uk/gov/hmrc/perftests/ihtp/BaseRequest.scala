@@ -35,7 +35,6 @@ trait BaseRequest extends ServicesConfiguration {
   val WhatWillYouNeed: String               = s"$route/start-report-you-will-need"
   val ReportInheritanceTaxOnPension: String = s"$route/report-inheritance-tax-on-pension"
 
-  
   protected val CsrfPattern =
     """name="csrfToken"\s+value="([^"]+)""""
 
