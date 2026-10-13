@@ -103,22 +103,6 @@ object IHTPPSPPageRequests extends BaseRequest {
       .check(status.is(303))
       .check(header(locationHeaderExpr).is(s"$route/deceased-has-ni-number": String))
 
-//
-//  def getEnterNationalInsuranceNumberPageForPsp: HttpRequestBuilder =
-//    http("Navigate to Deceased has a National Insurance number Page")
-//      .get(s"$baseUrl$route/enter-national-insurance-number": String)
-//      .check(status.is(200))
-//      .check(saveCsrfToken())
-//
-//  def postEnterNationalInsuranceNumberPageForPsp(nino: String): HttpRequestBuilder =
-//    http("Post Deceased has a National Insurance number Page")
-//      .post(s"$baseUrl$route/enter-national-insurance-number")
-//      .formParam("csrfToken", csrfTokenExpr)
-//      .formParam("value", _ => "yes")
-//      .formParam("nino", _ => nino)
-//      .check(status.is(303))
-//      .check(header(locationHeaderExpr).is(s"$route/enter-birth-death-date"))
-
   def getEnterBirthDeathDatePageForPsp: HttpRequestBuilder =
     http("Navigate to Enter DOB and DOD of Deceased Page")
       .get(s"$baseUrl$route/enter-birth-death-date": String)
@@ -265,20 +249,41 @@ object IHTPPSPPageRequests extends BaseRequest {
       .check(status.is(303))
       .check(header(locationHeaderExpr).is(s"$route/beneficiary-national-insurance-number/0": String))
 
-  def getBeneficiaryNationalInsuranceNumberPageForPsp: HttpRequestBuilder =
+  def getDoesBeneficiaryHaveNationalInsuranceNumberPageForPsp: HttpRequestBuilder =
     http("Navigate to Does Joe Doe have a National Insurance number? Page")
       .get(s"$baseUrl$route/beneficiary-national-insurance-number/0": String)
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  def postBeneficiaryNationalInsuranceNumberPageForPsp(submitOption: String): HttpRequestBuilder =
+  def postDoesBeneficiaryHaveNationalInsuranceNumberPageForPsp(submitOption: String): HttpRequestBuilder =
     http("Post Does Joe Doe have a National Insurance number? Page")
       .post(s"$baseUrl$route/beneficiary-national-insurance-number/0": String)
       .disableFollowRedirect
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", submitOption: Expression[String])
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/add-beneficiary": String))
+      .check(
+        header(locationHeaderExpr).is(
+          submitOption match {
+            case "true"  => s"$route/enter-ni-number/0"
+            case "false" => s"$route/check-your-answers"
+          }
+        )
+      )
+
+  def getEnterBeneficiaryNationalInsuranceNumberPageForPsp: HttpRequestBuilder =
+    http("Navigate to Enter the National Insurance number for BeneficiaryFirstName BeneficiarySurnameName Page")
+      .get(s"$baseUrl$route/enter-ni-number/0": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postEnterBeneficiaryNationalInsuranceNumberPageForPsp: HttpRequestBuilder =
+    http("Post Enter the National Insurance number for BeneficiaryFirstName BeneficiarySurnameName Page")
+      .post(s"$baseUrl$route/enter-ni-number/0": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", _ => nino)
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/add-beneficiary"))
 
   def getYouAddedABeneficiaryPageForPsp: HttpRequestBuilder =
     http("Navigate to You have added 1 beneficiary Page")
