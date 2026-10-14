@@ -236,6 +236,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     postEnterNameOfBeneficiary("BeneficiaryFirstName", "BeneficiarySurnameName"),
     getDoesBeneficiaryHaveNationalInsuranceNumberPage,
     postDoesBeneficiaryHaveNationalInsuranceNumberPage("false"),
+    getWhyDoesBeneficiaryNotHaveNationalInsuranceNumberReasonPage,
+    postWhyDoesBeneficiaryNotHaveNationalInsuranceNumberReasonPage("Beneficiary not a UK citizen"),
     getBeneficiaryListRedirectToCYA,
     getCYAPage,
     postCYAPage,
