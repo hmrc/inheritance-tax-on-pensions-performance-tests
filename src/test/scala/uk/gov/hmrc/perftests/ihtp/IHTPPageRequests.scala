@@ -120,7 +120,7 @@ object IHTPPageRequests extends BaseRequest {
         header(locationHeaderExpr).is(
           deceasednino match {
             case "true"  => s"$route/enter-deceased-ni-number"
-            case "false" => s"$route/reason-no-ni-number"
+            case "false" => s"$route/deceased-no-ni-reason"
           }
         )
       )
@@ -376,10 +376,25 @@ object IHTPPageRequests extends BaseRequest {
         header(locationHeaderExpr).is(
           submitOption match {
             case "true"  => s"$route/enter-ni-number/0"
-            case "false" => s"$route/check-your-answers"
+            case "false" => s"$route/no-ni-reason/0"
           }
         )
       )
+
+  def getWhyDoesBeneficiaryNotHaveNationalInsuranceNumberReasonPage: HttpRequestBuilder =
+    http("Navigate to Why does BeneficiaryFirstName BeneficiarySurnameName not have a National Insurance number? Page")
+      .get(s"$baseUrl$route/no-ni-reason/0": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postWhyDoesBeneficiaryNotHaveNationalInsuranceNumberReasonPage(reasonForNoNino: String): HttpRequestBuilder =
+    http("Post Why does BeneficiaryFirstName BeneficiarySurnameName not have a National Insurance number? Page")
+      .post(s"$baseUrl$route/no-ni-reason/0": String)
+      .disableFollowRedirect
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("beneficiaryNoNinoReason", _ => reasonForNoNino)
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/add-beneficiary": String))
 
   def getEnterBeneficiaryNationalInsuranceNumberPage: HttpRequestBuilder =
     http("Navigate to Enter the National Insurance number for BeneficiaryFirstName BeneficiarySurnameName Page")
