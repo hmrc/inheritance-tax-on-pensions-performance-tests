@@ -283,7 +283,7 @@ object IHTPPSPPageRequests extends BaseRequest {
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", _ => nino)
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/add-beneficiary"))
+      .check(header(locationHeaderExpr).is(s"$route/enter-amount-tax-payable/0"))
 
   def getYouAddedABeneficiaryPageForPsp: HttpRequestBuilder =
     http("Navigate to You have added 1 beneficiary Page")

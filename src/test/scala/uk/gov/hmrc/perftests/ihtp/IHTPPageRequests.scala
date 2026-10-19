@@ -394,7 +394,7 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("beneficiaryNoNinoReason", _ => reasonForNoNino)
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/add-beneficiary": String))
+      .check(header(locationHeaderExpr).is(s"$route/enter-amount-tax-payable/0": String))
 
   def getEnterBeneficiaryNationalInsuranceNumberPage: HttpRequestBuilder =
     http("Navigate to Enter the National Insurance number for BeneficiaryFirstName BeneficiarySurnameName Page")
@@ -407,6 +407,20 @@ object IHTPPageRequests extends BaseRequest {
       .post(s"$baseUrl$route/enter-ni-number/0": String)
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", _ => nino)
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/enter-amount-tax-payable/0"))
+
+  def getEnterAmountOfInheritanceTaxPayableForIndividualBeneficiaryPage: HttpRequestBuilder =
+    http("Navigate to Enter the amount of Inheritance Tax payable for BeneficiaryFirstName BeneficiarySurnameName Page")
+      .get(s"$baseUrl$route/enter-amount-tax-payable/0": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postEnterAmountOfInheritanceTaxPayableForIndividualBeneficiaryPage(taxAmount: String): HttpRequestBuilder =
+    http("Post Enter the amount of Inheritance Tax payable for BeneficiaryFirstName BeneficiarySurnameName Page")
+      .post(s"$baseUrl$route/enter-amount-tax-payable/0": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", _ => taxAmount)
       .check(status.is(303))
       .check(header(locationHeaderExpr).is(s"$route/add-beneficiary"))
 
