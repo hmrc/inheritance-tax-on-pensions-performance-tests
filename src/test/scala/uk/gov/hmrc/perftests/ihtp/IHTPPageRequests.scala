@@ -357,7 +357,7 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", trustName: Expression[String])
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/add-beneficiary": String))
+      .check(header(locationHeaderExpr).is(s"$route/beneficiary-organisation-contact/0": String))
 
   def getDoesBeneficiaryHaveNationalInsuranceNumberPage: HttpRequestBuilder =
     http("Navigate to Does BeneficiaryFirstName BeneficiarySurnameName have a National Insurance number? Page")
@@ -418,6 +418,36 @@ object IHTPPageRequests extends BaseRequest {
 
   def postEnterAmountOfInheritanceTaxPayableForIndividualBeneficiaryPage(taxAmount: String): HttpRequestBuilder =
     http("Post Enter the amount of Inheritance Tax payable for BeneficiaryFirstName BeneficiarySurnameName Page")
+      .post(s"$baseUrl$route/enter-amount-tax-payable/0": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", _ => taxAmount)
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/add-beneficiary"))
+
+  def getNamePrTrustBeneficiaryPage: HttpRequestBuilder =
+    http("Navigate to Enter the full name of the PR at <Trust name> Page")
+      .get(s"$baseUrl$route/beneficiary-organisation-contact/0": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postNamePrTrustBeneficiaryPage(firstForename: String, surname: String): HttpRequestBuilder =
+    http("Post Enter the full name of the PR at <Trust name> Page")
+      .post(s"$baseUrl$route/beneficiary-organisation-contact/0": String)
+      .disableFollowRedirect
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("firstForename", _ => firstForename)
+      .formParam("surname", _ => surname)
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/enter-amount-tax-payable/0": String))
+
+  def getEnterAmountOfInheritanceTaxPayableForTrustBeneficiaryPage: HttpRequestBuilder =
+    http("Navigate to Enter the amount of Inheritance Tax payable for Test Organisation & Co ltd. Page")
+      .get(s"$baseUrl$route/enter-amount-tax-payable/0": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postEnterAmountOfInheritanceTaxPayableForTrustBeneficiaryPage(taxAmount: String): HttpRequestBuilder =
+    http("Post Enter the amount of Inheritance Tax payable for Test Organisation & Co ltd. Page")
       .post(s"$baseUrl$route/enter-amount-tax-payable/0": String)
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", _ => taxAmount)
