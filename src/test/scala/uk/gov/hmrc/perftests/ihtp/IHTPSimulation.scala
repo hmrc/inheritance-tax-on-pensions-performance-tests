@@ -208,6 +208,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     postAreBeneficiariesKnownPage("false"),
     getEnterInheritanceTaxPayable,
     PostEnterInheritanceTaxPayable("£5000"),
+    getEnterAmountOfInterestPayableForNoBeneficiariesPage,
+    postEnterAmountOfInterestPayableForNoBeneficiariesPage("10"),
     getCYAPage,
     postCYAPage,
     getPsaDeclarationPage
