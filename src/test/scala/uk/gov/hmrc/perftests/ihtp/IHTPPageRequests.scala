@@ -422,6 +422,20 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", _ => taxAmount)
       .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/enter-amount-interest/0"))
+
+  def getEnterAmountOfInterestPayableForIndividualBeneficiaryPage: HttpRequestBuilder =
+    http("Navigate to Enter the amount of Inheritance Tax payable for BeneficiaryFirstName BeneficiarySurnameName Page")
+      .get(s"$baseUrl$route/enter-amount-interest/0": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postEnterAmountOfInterestPayableForIndividualBeneficiaryPage(taxAmount: String): HttpRequestBuilder =
+    http("Post Enter the amount of interest payable for BeneficiaryFirstName BeneficiarySurnameName Page")
+      .post(s"$baseUrl$route/enter-amount-interest/0": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", _ => taxAmount)
+      .check(status.is(303))
       .check(header(locationHeaderExpr).is(s"$route/add-beneficiary"))
 
   def getNamePrTrustBeneficiaryPage: HttpRequestBuilder =
@@ -449,6 +463,20 @@ object IHTPPageRequests extends BaseRequest {
   def postEnterAmountOfInheritanceTaxPayableForTrustBeneficiaryPage(taxAmount: String): HttpRequestBuilder =
     http("Post Enter the amount of Inheritance Tax payable for Test Organisation & Co ltd. Page")
       .post(s"$baseUrl$route/enter-amount-tax-payable/0": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", _ => taxAmount)
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/enter-amount-interest/0"))
+
+  def getEnterAmountOfInterestPayableForTrustBeneficiaryPage: HttpRequestBuilder =
+    http("Navigate to Enter the amount of interest payable for Test Organisation & Co ltd. Page")
+      .get(s"$baseUrl$route/enter-amount-interest/0": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postEnterAmountOfInterestPayableForTrustBeneficiaryPage(taxAmount: String): HttpRequestBuilder =
+    http("Post Enter the amount of interest payable for Test Organisation & Co ltd. Page")
+      .post(s"$baseUrl$route/enter-amount-interest/0": String)
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", _ => taxAmount)
       .check(status.is(303))
