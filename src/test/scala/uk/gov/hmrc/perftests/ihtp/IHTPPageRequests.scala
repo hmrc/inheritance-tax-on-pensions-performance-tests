@@ -307,7 +307,21 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", _ => taxAmount)
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/check-your-answers": String))
+      .check(header(locationHeaderExpr).is(s"$route/enter-amount-interest-no-beneficiary": String))
+
+  def getEnterAmountOfInterestPayableForNoBeneficiariesPage: HttpRequestBuilder =
+    http("Navigate to Enter the amount of interest payable Page")
+      .get(s"$baseUrl$route/enter-amount-interest-no-beneficiary": String)
+      .check(status.is(200))
+      .check(saveCsrfToken())
+
+  def postEnterAmountOfInterestPayableForNoBeneficiariesPage(taxAmount: String): HttpRequestBuilder =
+    http("Post Enter the amount of interest payable Page")
+      .post(s"$baseUrl$route/enter-amount-interest-no-beneficiary": String)
+      .formParam("csrfToken", csrfTokenExpr)
+      .formParam("value", _ => taxAmount)
+      .check(status.is(303))
+      .check(header(locationHeaderExpr).is(s"$route/check-your-answers"))   
 
   def getSelectBeneficiaryTypePage: HttpRequestBuilder =
     http("Navigate to Select the type of beneficiary to add Page")
