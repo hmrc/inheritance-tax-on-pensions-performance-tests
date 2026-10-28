@@ -27,4 +27,10 @@ object TestOnlyRequests extends BaseRequest {
       .get(s"$baseUrl/inheritance-tax-on-pensions/test-only/$srn/seed-pr-address")
       .disableFollowRedirect
       .check(status.is(200))
+
+  def seedBeneficiaryAddress(index: Int): HttpRequestBuilder =
+    http(s"Populate beneficiary $index address without Address Lookup Frontend")
+      .get(s"$baseUrl/inheritance-tax-on-pensions/test-only/$srn/$index/seed-beneficiary-address")
+      .disableFollowRedirect
+      .check(status.is(200))
 }

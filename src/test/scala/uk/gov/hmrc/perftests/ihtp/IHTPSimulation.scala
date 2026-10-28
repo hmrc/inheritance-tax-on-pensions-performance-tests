@@ -19,7 +19,7 @@ package uk.gov.hmrc.perftests.ihtp
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.ihtp.IHTPPSPPageRequests.*
 import uk.gov.hmrc.perftests.ihtp.IHTPPageRequests.*
-import uk.gov.hmrc.perftests.ihtp.TestOnlyRequests.seedPrAddress
+import uk.gov.hmrc.perftests.ihtp.TestOnlyRequests.*
 
 class IHTPSimulation extends PerformanceTestRunner {
 
@@ -63,6 +63,7 @@ class IHTPSimulation extends PerformanceTestRunner {
     postDoesBeneficiaryHaveNationalInsuranceNumberPage("true"),
     getEnterBeneficiaryNationalInsuranceNumberPage,
     postEnterBeneficiaryNationalInsuranceNumberPage,
+    seedBeneficiaryAddress(0),
     getEnterAmountOfInheritanceTaxPayableForIndividualBeneficiaryPage,
     postEnterAmountOfInheritanceTaxPayableForIndividualBeneficiaryPage("2000"),
     getEnterAmountOfInterestPayableForIndividualBeneficiaryPage,
@@ -113,6 +114,7 @@ class IHTPSimulation extends PerformanceTestRunner {
     postEnterNameOfTrust("Test Organisation & Co ltd."),
     getNamePrTrustBeneficiaryPage,
     postNamePrTrustBeneficiaryPage("PRTrustBeneficiaryFirstname", "PRTrustBeneficiarySurname"),
+    seedBeneficiaryAddress(0),
     getEnterAmountOfInheritanceTaxPayableForTrustBeneficiaryPage,
     postEnterAmountOfInheritanceTaxPayableForTrustBeneficiaryPage("2000"),
     getEnterAmountOfInterestPayableForTrustBeneficiaryPage,
@@ -164,6 +166,7 @@ class IHTPSimulation extends PerformanceTestRunner {
     postDoesBeneficiaryHaveNationalInsuranceNumberPageForPsp("true"),
     getEnterBeneficiaryNationalInsuranceNumberPageForPsp,
     postEnterBeneficiaryNationalInsuranceNumberPageForPsp,
+    seedBeneficiaryAddress(0),
     getEnterAmountOfInheritanceTaxPayableForIndividualBeneficiaryPage,
     postEnterAmountOfInheritanceTaxPayableForIndividualBeneficiaryPage("2000"),
     getEnterAmountOfInterestPayableForIndividualBeneficiaryPage,
@@ -254,6 +257,7 @@ class IHTPSimulation extends PerformanceTestRunner {
     postDoesBeneficiaryHaveNationalInsuranceNumberPage("false"),
     getWhyDoesBeneficiaryNotHaveNationalInsuranceNumberReasonPage,
     postWhyDoesBeneficiaryNotHaveNationalInsuranceNumberReasonPage("Beneficiary not a UK citizen"),
+    seedBeneficiaryAddress(0),
     getEnterAmountOfInheritanceTaxPayableForIndividualBeneficiaryPage,
     postEnterAmountOfInheritanceTaxPayableForIndividualBeneficiaryPage("2000"),
     getEnterAmountOfInterestPayableForIndividualBeneficiaryPage,
