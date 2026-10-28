@@ -321,7 +321,7 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", _ => taxAmount)
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/check-your-answers"))   
+      .check(header(locationHeaderExpr).is(s"$route/check-your-answers"))
 
   def getSelectBeneficiaryTypePage: HttpRequestBuilder =
     http("Navigate to Select the type of beneficiary to add Page")
@@ -422,7 +422,7 @@ object IHTPPageRequests extends BaseRequest {
       .formParam("csrfToken", csrfTokenExpr)
       .formParam("value", _ => nino)
       .check(status.is(303))
-      .check(header(locationHeaderExpr).is(s"$route/enter-pr-organisation-address"))
+      .check(header(locationHeaderExpr).is(s"$route/enter-beneficiary-address/0"))
 
   def getEnterAmountOfInheritanceTaxPayableForIndividualBeneficiaryPage: HttpRequestBuilder =
     http("Navigate to Enter the amount of Inheritance Tax payable for BeneficiaryFirstName BeneficiarySurnameName Page")
