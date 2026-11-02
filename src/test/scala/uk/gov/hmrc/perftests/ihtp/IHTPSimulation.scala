@@ -71,9 +71,9 @@ class IHTPSimulation extends PerformanceTestRunner {
     getYouAddedABeneficiaryPage,
     postYouAddedABeneficiaryPage("false"),
     postCYAPage,
-    getPsaDeclarationPage
-//    postPsaDeclarationPage,
-//    getPsaIHTPReportSubmittedPage
+    getPsaDeclarationPage,
+    postPsaDeclarationPage,
+    getPsaIHTPReportSubmittedPage
   )
 
   setup(
@@ -123,9 +123,9 @@ class IHTPSimulation extends PerformanceTestRunner {
     postYouAddedABeneficiaryPage("false"),
     postCYAPage,
     postCYAPage,
-    getPsaDeclarationPage
-    //    postPsaDeclarationPage,
-    //    getPsaIHTPReportSubmittedPage
+    getPsaDeclarationPage,
+    postPsaDeclarationPage,
+    getPsaIHTPReportSubmittedPage
   )
 
   setup(
@@ -174,9 +174,9 @@ class IHTPSimulation extends PerformanceTestRunner {
     getBeneficiaryListRedirectToCYA,
     getCYAPageForPsp,
     postCYAPageForPsp,
-    getDeclarationPageForPsp
-//  postDeclarationPageForPsp,
-//  getIHTPReportSubmittedPageForPsp
+    getDeclarationPageForPsp,
+    postDeclarationPageForPsp,
+    getIHTPReportSubmittedPageForPsp
   )
 
   setup(
@@ -215,8 +215,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     postEnterAmountOfInterestPayableForNoBeneficiariesPage("10"),
     getCYAPage,
     postCYAPage,
-    getPsaDeclarationPage
-//    postPsaDeclarationPage,
+    getPsaDeclarationPage,
+    postPsaDeclarationPage,
   )
 
   setup(
@@ -265,7 +265,8 @@ class IHTPSimulation extends PerformanceTestRunner {
     getBeneficiaryListRedirectToCYA,
     getCYAPage,
     postCYAPage,
-    getPsaDeclarationPage
+    getPsaDeclarationPage,
+    postPsaDeclarationPage
   )
 
   setup(
