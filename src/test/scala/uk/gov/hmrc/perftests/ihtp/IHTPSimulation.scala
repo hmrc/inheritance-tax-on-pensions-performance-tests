@@ -30,8 +30,8 @@ class IHTPSimulation extends PerformanceTestRunner {
   val pauseTest = pause(500 milliseconds).actionBuilders.last
 
   setup(
-    "psa-view-submissions-with-organisation",
-    "PSA View Submissions with Organisation"
+    "ihtp-submission",
+    "Ihtp Submission"
   ) withActions(
     getLoginToIHTPPage, pauseTest,
     postLoginToIHTPPage, pauseTest,
