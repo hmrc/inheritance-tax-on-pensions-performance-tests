@@ -27,7 +27,7 @@ import uk.gov.hmrc.perftests.ihtp.TestOnlyRequests.*
 
 class IHTPSimulation extends PerformanceTestRunner {
 
-  val pauseTest = pause(500 milliseconds).actionBuilders.last
+  val pauseTest = pause(270 milliseconds).actionBuilders.last
 
   setup(
     "ihtp-submission",
